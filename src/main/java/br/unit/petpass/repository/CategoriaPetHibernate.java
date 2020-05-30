@@ -36,35 +36,35 @@ public class CategoriaPetHibernate {
 		return query.getSingleResult();
 	}
 
-	public CategoriaPet updateById(Integer id, String newType) {
+	public void updateById(Integer id, String newType) {
+		
+		findById(id).setTipo(newType);
+
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "update CategoriaPet c set c.tipo = :newType where c.codigoCategoria = :id";
-		Query<CategoriaPet> query = session.createQuery(hql);
-		query.setParameter("id", id);
-		query.setParameter("newType", newType);
-		return query.getSingleResult();
+		Transaction transaction = session.beginTransaction();
+		session.saveOrUpdate(findById(id));
+		transaction.commit();
 	}
 
 	public static void main(String[] args) {
 		CategoriaPetHibernate reporCategoriaHibernate = new CategoriaPetHibernate();
 
-//		CategoriaPet categoria1 = new CategoriaPet(4, "Gato");
-//		reporCategoriaHibernate.salvar(categoria1);
-//
-//		CategoriaPet categoria2 = new CategoriaPet(5, "Ave");
-//		reporCategoriaHibernate.salvar(categoria2);
-//
-//		CategoriaPet categoria3 = new CategoriaPet(6, "Réptil");
-//		reporCategoriaHibernate.salvar(categoria3);
+		CategoriaPet categoria1 = new CategoriaPet(4, "Gato");
+		reporCategoriaHibernate.salvar(categoria1);
+
+		CategoriaPet categoria2 = new CategoriaPet(5, "Ave");
+		reporCategoriaHibernate.salvar(categoria2);
+
+		CategoriaPet categoria3 = new CategoriaPet(6, "Réptil");
+		reporCategoriaHibernate.salvar(categoria3);
 
 		List<CategoriaPet> listaDeCategoriaPet = reporCategoriaHibernate.listarTodos();
 		for (CategoriaPet categorias : listaDeCategoriaPet) {
 			System.out.println(categorias);
 		}
 
-	
 		reporCategoriaHibernate.updateById(5, "Passarinho");
-		
+
 		CategoriaPet categoriaX = reporCategoriaHibernate.findById(5);
 		System.out.println(categoriaX);
 	}

@@ -54,28 +54,4 @@ public class CategoriaPetHibernate {
 		transaction.commit();
 	}
 
-	public static void main(String[] args) {
-		CategoriaPetHibernate reporCategoriaHibernate = new CategoriaPetHibernate();
-
-//		CategoriaPet categoria1 = new CategoriaPet(4, "Gato");
-//		reporCategoriaHibernate.salvar(categoria1);
-//
-//		CategoriaPet categoria2 = new CategoriaPet(5, "Ave");
-//		reporCategoriaHibernate.salvar(categoria2);
-//
-//		CategoriaPet categoria3 = new CategoriaPet(6, "Réptil");
-//		reporCategoriaHibernate.salvar(categoria3);
-
-//		reporCategoriaHibernate.updateById(5, "Passarinho");
-		
-		reporCategoriaHibernate.deleteById(4);
-
-		List<CategoriaPet> listaDeCategoriaPet = reporCategoriaHibernate.listarTodos();
-		for (CategoriaPet categorias : listaDeCategoriaPet) {
-			System.out.println(categorias);
-		}
-		
-//		CategoriaPet categoriaX = reporCategoriaHibernate.findById(5);
-//		System.out.println(categoriaX);
-	}
 }

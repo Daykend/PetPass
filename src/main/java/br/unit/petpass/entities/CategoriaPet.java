@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 public class CategoriaPet implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@Column(name="CODIGOCATEGORIA")
 	private Integer codigoCategoria;

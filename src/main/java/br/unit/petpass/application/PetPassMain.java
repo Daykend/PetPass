@@ -43,6 +43,7 @@ public class PetPassMain {
 			System.out.println("------Opção Inválida------");
 		}
 		
+		System.out.println("Testando git bash e git hub");
 		
 		
 //		geraInsertsCategoriaPet();  // Pode alterar os valores da Categoria dentro do metodo mais abaixo

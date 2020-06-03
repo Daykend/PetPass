@@ -1,18 +1,49 @@
 package br.unit.petpass.application;
 
 import java.util.List;
+import java.util.Scanner;
 
+import br.unit.petpass.controller.ClienteController;
 import br.unit.petpass.entities.CategoriaPet;
+import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Plano;
 import br.unit.petpass.repository.CategoriaPetHibernate;
 import br.unit.petpass.repository.PlanoHibernate;
 
 public class PetPassMain {
-	
+	private static ClienteController clienteController = new ClienteController();
 	private static CategoriaPetHibernate reporCategoriaHibernate = new CategoriaPetHibernate();
 	private static PlanoHibernate reporPlanoHibernate = new PlanoHibernate();
 	
 	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		int escolhaDeMenu;
+		System.out.println("-----------------------------------");
+		System.out.println("------ Bem Vindo ao PETPASS! ------");
+		System.out.println("-----------------------------------");
+		System.out.println("------ Selecione o seu Login!------");
+		System.out.println("[1] - Criar Registro");
+		System.out.println("[2] - Fazer Login");
+		escolhaDeMenu = scan.nextInt();
+		
+		if (escolhaDeMenu == 1) {
+			
+			System.out.println("Por favor, preencha os campos a seguir");
+			System.out.println("Nome:");
+			
+			System.out.println("Por favor, preencha os campos a seguir");
+			System.out.println("Nome:");
+			
+		} if (escolhaDeMenu == 2) {
+			
+			
+			
+		} else {
+			System.out.println("------Opção Inválida------");
+		}
+		
+		
 		
 //		geraInsertsCategoriaPet();  // Pode alterar os valores da Categoria dentro do metodo mais abaixo
 
@@ -37,13 +68,13 @@ public class PetPassMain {
 		System.out.println(plano);
 		
 		System.out.println("Atualizar Preço do Plano");
-		reporPlanoHibernate.updatePiceOfPlan(3, 450.0);
+		reporPlanoHibernate.updatePriceOfPlan(3, 450.0);
 		
 		System.out.println("Atualizar Nome do Plano");
 		reporPlanoHibernate.updatePlanName(1, "PetPass Basic");
 		
 		System.out.println("Atualizar Pacote Inical de Credito do Plano");
-		reporPlanoHibernate.updatePiceOfPlan(3, 450.0);
+		reporPlanoHibernate.updatePriceOfPlan(3, 450.0);
 		
 		System.out.println("Atualizar Status do Plano (true/false)");
 		reporPlanoHibernate.updatePlanStatus(1, false);

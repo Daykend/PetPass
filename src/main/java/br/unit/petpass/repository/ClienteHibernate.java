@@ -1,11 +1,11 @@
 package br.unit.petpass.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.hibernate.type.LocalDateType;
 
 import br.unit.petpass.entities.Cliente;
 
@@ -75,7 +75,7 @@ public class ClienteHibernate {
 		transaction.commit();
 	}
 	
-	public void updateClientDateOfBirth(Integer id, LocalDateType dtNascimento) {
+	public void updateClientDateOfBirth(Integer id, LocalDate dtNascimento) {
 
 		findById(id).setDtNascimento(dtNascimento);
 

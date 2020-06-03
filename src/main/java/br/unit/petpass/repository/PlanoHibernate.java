@@ -44,7 +44,7 @@ public class PlanoHibernate {
 		transaction.commit();
 	}
 	
-	public void updatePiceOfPlan(Integer id, Double preco) {
+	public void updatePriceOfPlan(Integer id, Double preco) {
 
 		findById(id).setPreco(preco);
 

@@ -1,13 +1,12 @@
 package br.unit.petpass.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.type.LocalDateType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,7 +44,7 @@ public class Cliente implements Serializable {
 	private String endereco;
 
 	@Column(name = "DTNASCIMENTO")
-	private LocalDateType dtNascimento;
+	private LocalDate dtNascimento;
 
 	@Column(name = "SEXO")
 	private Character sexo;

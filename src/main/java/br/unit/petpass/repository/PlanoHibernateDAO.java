@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.Plano;
 
-public class PlanoHibernate {
+public class PlanoHibernateDAO {
 
 	public void salvar(Plano plano) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -64,7 +64,7 @@ public class PlanoHibernate {
 		transaction.commit();
 	}
 	
-	public void updatePlanStatus(Integer id, boolean status) {
+	public void updatePlanStatus(Integer id, Integer status) {
 
 		findById(id).setStatusPlano(status);
 

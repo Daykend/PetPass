@@ -8,9 +8,9 @@ import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.CategoriaPet;
 import br.unit.petpass.repository.HibernateUtil;
-import br.unit.petpass.repository.CategoriaPetHibernate;
+import br.unit.petpass.repository.CategoriaPetHibernateDAO;
 
-public class CategoriaPetHibernate {
+public class CategoriaPetHibernateDAO {
 
 	public void salvar(CategoriaPet categoria) {
 		Session session = HibernateUtil.getSessionFactory().openSession();

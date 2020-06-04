@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -24,9 +26,10 @@ public class CategoriaPet implements Serializable {
 	
 	@Id
 	@Column(name="CODIGOCATEGORIA")
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Defidindo que essa coluna é identity igual ao banco
 	private Integer codigoCategoria;
 	
-	@Column(name="TIPO")
+	@Column(name="TIPO", length = 20) // Definindo nome e tamanho maximo de caracteres como tem na criação da tabela do banco
 	private String tipo;
 
 }

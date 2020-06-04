@@ -7,13 +7,13 @@ import br.unit.petpass.controller.ClienteController;
 import br.unit.petpass.entities.CategoriaPet;
 import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Plano;
-import br.unit.petpass.repository.CategoriaPetHibernate;
-import br.unit.petpass.repository.PlanoHibernate;
+import br.unit.petpass.repository.CategoriaPetHibernateDAO;
+import br.unit.petpass.repository.PlanoHibernateDAO;
 
 public class PetPassMain {
 	private static ClienteController clienteController = new ClienteController();
-	private static CategoriaPetHibernate reporCategoriaHibernate = new CategoriaPetHibernate();
-	private static PlanoHibernate reporPlanoHibernate = new PlanoHibernate();
+	private static CategoriaPetHibernateDAO reporCategoriaHibernate = new CategoriaPetHibernateDAO();
+	private static PlanoHibernateDAO reporPlanoHibernate = new PlanoHibernateDAO();
 	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
@@ -77,8 +77,8 @@ public class PetPassMain {
 		System.out.println("Atualizar Pacote Inical de Credito do Plano");
 		reporPlanoHibernate.updatePriceOfPlan(3, 450.0);
 		
-		System.out.println("Atualizar Status do Plano (true/false)");
-		reporPlanoHibernate.updatePlanStatus(1, false);
+		System.out.println("Atualizar Status do Plano (1/0)");
+		reporPlanoHibernate.updatePlanStatus(1, 0);
 		
 		
 		reporPlanoHibernate.deleteById(4);
@@ -104,16 +104,16 @@ public class PetPassMain {
 	
 	public static void geraInsertsPlano() {
 		
-		Plano plano1 = new Plano(1, "PetPass", 100.0, 100, true);
+		Plano plano1 = new Plano(1, "PetPass", 100.0, 100, 1);
 		reporPlanoHibernate.salvar(plano1);
 		
-		Plano plano2 = new Plano(2, "PetPass Plus", 200.0, 200, true);
+		Plano plano2 = new Plano(2, "PetPass Plus", 200.0, 200, 1);
 		reporPlanoHibernate.salvar(plano2);
 		
-		Plano plano3 = new Plano(3, "PetPass Gold", 300.0, 300, true);
+		Plano plano3 = new Plano(3, "PetPass Gold", 300.0, 300, 1);
 		reporPlanoHibernate.salvar(plano3);
 		
-		Plano plano4 = new Plano(4, "PetPass Deluxe", 500.0, 500, true);
+		Plano plano4 = new Plano(4, "PetPass Deluxe", 500.0, 500, 1);
 		reporPlanoHibernate.salvar(plano4);
 	}
 

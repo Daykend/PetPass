@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.Cliente;
 
-public class ClienteHibernate {
+public class ClienteHibernateDAO {
 
 	public void salvar(Cliente cliente) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -85,7 +85,7 @@ public class ClienteHibernate {
 		transaction.commit();
 	}
 	
-	public void updateClientSex(Integer id, Character sexo) {
+	public void updateClientSex(Integer id, String sexo) {
 
 		findById(id).setSexo(sexo);
 
@@ -115,7 +115,7 @@ public class ClienteHibernate {
 		transaction.commit();
 	}
 
-	public void updateClientStatus(Integer id, boolean status) {
+	public void updateClientStatus(Integer id, Integer status) {
 
 		findById(id).setStatusCliente(status);
 

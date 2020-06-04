@@ -24,16 +24,16 @@ public class Plano implements Serializable {
 	@Column(name = "CODIGOPLANO")
 	private Integer codigoPlano;
 
-	@Column(name = "NOME")
+	@Column(name = "NOME", length = 25, nullable = false)
 	private String nome;
 
-	@Column(name = "PRECO")
+	@Column(name = "PRECO", nullable = false)
 	private Double preco;
 
-	@Column(name = "PACOTEINICIALCREDITO")
+	@Column(name = "PACOTEINICIALCREDITO", nullable = false)
 	private Integer pacoteInicialCredito;
 
 	@Column(name = "STATUS_PLANO")
-	private boolean statusPlano = true;
+	private Integer statusPlano = 1;
 
 }

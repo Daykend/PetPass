@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.Empresa;
 
-public class ServicosHibernate {
+public class ServicosHibernateDAO {
 
 	public void salvar(Empresa empresa) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -64,7 +64,7 @@ public class ServicosHibernate {
 		transaction.commit();
 	}
 	
-	public void updateCompanyStatus(Integer id, boolean status) {
+	public void updateCompanyStatus(Integer id, Integer status) {
 
 		findById(id).setStatusEmpresa(status);
 

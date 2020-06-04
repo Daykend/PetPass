@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.repository.ClienteHibernate;
+import br.unit.petpass.repository.ClienteHibernateDAO;
 
 public class ClienteController {
 
-	private ClienteHibernate clienteHibernate;
+	private ClienteHibernateDAO clienteHibernateDAO;
 
 	public ClienteController() {
-		clienteHibernate = new ClienteHibernate();
+		clienteHibernateDAO = new ClienteHibernateDAO();
 	}
 
 	public void inserir(Cliente cliente) {
@@ -21,7 +21,7 @@ public class ClienteController {
 			throw new RuntimeException("Não é possível cadastrar clientes menores de 18 anos");
 		}
 		
-		clienteHibernate.salvar(cliente);
+		clienteHibernateDAO.salvar(cliente);
 	}
 
 }

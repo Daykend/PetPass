@@ -36,49 +36,54 @@ public class PlanoHibernateDAO {
 
 	public void updatePlanName(Integer id, String newName) {
 
-		findById(id).setNome(newName);
+		Plano pl = findById(id);
+		pl.setNome(newName);
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.update(findById(id));
+		session.update(pl);
 		transaction.commit();
 	}
 	
 	public void updatePriceOfPlan(Integer id, Double preco) {
 
-		findById(id).setPreco(preco);
+		Plano pl = findById(id);
+		pl.setPreco(preco);
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.update(findById(id));
+		session.update(pl);
 		transaction.commit();
 	}
 	
 	public void updateInitialCreditOfPlan(Integer id, String newName) {
 
-		findById(id).setNome(newName);
+		Plano pl = findById(id);
+		pl.setNome(newName);
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.update(findById(id));
+		session.update(pl);
 		transaction.commit();
 	}
 	
 	public void updatePlanStatus(Integer id, Integer status) {
 
-		findById(id).setStatusPlano(status);
+		Plano pl = findById(id);
+		pl.setStatusPlano(status);
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.update(findById(id));
+		session.update(pl);
 		transaction.commit();
 	}
 
 	public void deleteById(Integer id) {
-
+		Plano pl = findById(id);
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.delete(findById(id));
+		session.delete(pl);
 		transaction.commit();
 	}
 }

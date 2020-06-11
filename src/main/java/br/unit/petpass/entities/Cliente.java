@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,33 +25,36 @@ public class Cliente implements Serializable {
 
 	@Id
 	@Column(name = "CODIGOCLIENTE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoCliente;
 
-	@Column(name = "CPF")
+	@Column(name = "CPF", unique = true, length = 15, nullable = false) //Definindo Unique como 'ativo', NotNull
 	private String cpf;
 
-	@Column(name = "NOME")
+	@Column(name = "NOME", length = 80, nullable = false)
 	private String nome;
 
-	@Column(name = "RG")
+	@Column(name = "RG", length = 10, nullable = false)
 	private String rg;
 
-	@Column(name = "TELEFONE")
+	@Column(name = "TELEFONE", unique = true, length = 11, nullable = false)
 	private String telefone;
 
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", unique = true, length = 50, nullable = false)
 	private String email;
 
-	@Column(name = "ENDERECO")
+	@Column(name = "ENDERECO", length = 250, nullable = false)
 	private String endereco;
 
-	@Column(name = "DTNASCIMENTO")
+	@Column(name = "DTNASCIMENTO", nullable = false)
 	private LocalDate dtNascimento;
 
-	@Column(name = "SEXO")
-	private Character sexo;
+	@Column(name = "SEXO", length = 1)
+	private String sexo;
 
 	@Column(name = "STATUS_CLIENTE")
-	private boolean statusCliente = true;
+	private Integer statusCliente = 1;  //Duvida valor padrão
+	
+	//Duvida se o Cliente vai ter uma Lista dos pets ou não, e se vai ter que mapear isso, já que no banco não tem fk de pet em cliente e sim o contrário
 
 }

@@ -8,9 +8,9 @@ import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.CategoriaPet;
 import br.unit.petpass.repository.HibernateUtil;
-import br.unit.petpass.repository.CategoriaPetHibernate;
+import br.unit.petpass.repository.CategoriaPetHibernateDAO;
 
-public class CategoriaPetHibernate {
+public class CategoriaPetHibernateDAO {
 
 	public void salvar(CategoriaPet categoria) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -38,19 +38,21 @@ public class CategoriaPetHibernate {
 
 	public void updateById(Integer id, String newType) {
 
-		findById(id).setTipo(newType);
-
+		CategoriaPet catPet = findById(id);
+		catPet.setTipo(newType);
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.update(findById(id));
+		session.update(catPet);
 		transaction.commit();
 	}
 
 	public void deleteById(Integer id) {
+		CategoriaPet catPet = findById(id);
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.delete(findById(id));
+		session.delete(catPet);
 		transaction.commit();
 	}
 

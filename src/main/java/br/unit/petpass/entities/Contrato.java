@@ -1,22 +1,56 @@
 package br.unit.petpass.entities;
 
-import org.hibernate.type.LocalDateType;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
 @Data
 public class Contrato {
 	// Faltam as FKs: Cliente, Plano e os relacionamentos plano ativo e um contrato
-	
+	@Id
+	@Column(name="CODIGOCONTRATO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoContrato;
+	
+	@Column(name="NUMERODOCONTRATO", unique = true, nullable = false)
 	private Integer numeroContrato;
+	
+	@Column(name="SALDOINICIAL")
 	private Short saldoInicial;
+	
+	@Column(name="SALDOFINAL") // Duvida sobre Trigger e metodo de de setar o saldo final
 	private Short saldoFinal;
-	private LocalDateType dtCompraCredito;
-	private LocalDateType dtVencimentoCredito;
-	private boolean statusContrato = true;
+	
+	@Column(name="DATACOMPRACREDITO", nullable = false)
+	private LocalDate dtCompraCredito;
+	
+	@Column(name="DATAVENCIMENTOCREDITO", nullable = false)
+	private LocalDate dtVencimentoCredito;
+	
+	@Column(name="STATUS_CONTRATO", nullable = false)
+	private Integer statusContrato = 1;
+	
+	@OneToOne
+	@JoinColumn//(name = "falta colocar o nome aqui ainda...")
 	private Cliente cliente;
+	
+	@ManyToOne
+	@JoinColumn//(name = "falta colocar o nome aqui ainda...")
 	private Plano plano;
 	
+	@OneToMany
+	@JoinColumn//(name = "falta colocar o nome aqui ainda...")
+	private List<NotaFiscal> notasFiscais = new ArrayList<>();	
 	
 }

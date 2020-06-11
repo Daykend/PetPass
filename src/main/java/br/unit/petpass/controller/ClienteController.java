@@ -5,32 +5,32 @@ import java.time.Period;
 import java.util.List;
 
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.repository.ClienteHibernate;
+import br.unit.petpass.repository.ClienteHibernateDAO;
 
 public class ClienteController {
 
-	private ClienteHibernate clienteHibernate;
-	
+	private ClienteHibernateDAO clienteHibernateDAO;
+
 	public ClienteController() {
-		clienteHibernate = new ClienteHibernate();
+		clienteHibernateDAO = new ClienteHibernateDAO();
 	}
 
 	public boolean salvarCliente(Cliente cliente) {
-		clienteHibernate.salvarCliente(cliente);
+		clienteHibernateDAO.salvarCliente(cliente);
 		return true;
 	}
 
 	public void updateCliente(Cliente cliente) {
-		clienteHibernate.updateCliente(cliente);
+		clienteHibernateDAO.updateCliente(cliente);
 	}
 
 	public Cliente getClientById(Integer codigoCliente) {
-		return clienteHibernate.getClientById(codigoCliente);
+		return clienteHibernateDAO.getClientById(codigoCliente);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Cliente> getAllClients(Integer codigoCliente) {
-		return clienteHibernate.getAllClients(codigoCliente);
+		return clienteHibernateDAO.getAllClients(codigoCliente);
 	}
 
 	public void confirmarIdade(Cliente cliente) {
@@ -39,8 +39,7 @@ public class ClienteController {
 		if (period.getYears() < 18) {
 			throw new RuntimeException("Não é possível cadastrar clientes menores de 18 anos");
 		}
-		
-		clienteHibernate.salvarCliente(cliente);
+		clienteHibernateDAO.salvarCliente(cliente);
 	}
 }	
 	/*

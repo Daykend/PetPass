@@ -1,5 +1,11 @@
 package br.unit.petpass.application;
 
+import static br.unit.petpass.application.PetPassMainConstantes.FAZER_LOGIN;
+import static br.unit.petpass.application.PetPassMainConstantes.CRIAR_REGISTRO;
+import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,39 +15,50 @@ import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Plano;
 import br.unit.petpass.repository.CategoriaPetHibernate;
 import br.unit.petpass.repository.PlanoHibernate;
+import br.unit.petpass.repository.ClienteHibernate;
 
 public class PetPassMain {
+
 	private static ClienteController clienteController = new ClienteController();
 	private static CategoriaPetHibernate reporCategoriaHibernate = new CategoriaPetHibernate();
 	private static PlanoHibernate reporPlanoHibernate = new PlanoHibernate();
 	
+	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		
-		int escolhaDeMenu;
 		System.out.println("-----------------------------------");
 		System.out.println("------ Bem Vindo ao PETPASS! ------");
 		System.out.println("-----------------------------------");
-		System.out.println("------ Selecione o seu Login!------");
-		System.out.println("[1] - Criar Registro");
-		System.out.println("[2] - Fazer Login");
-		escolhaDeMenu = scan.nextInt();
-		
-		if (escolhaDeMenu == 1) {
+	
+		int opcao = -1;
+//		do  
+		{
+			menuInicial();
+			opcao = scan.nextInt();
 			
-			System.out.println("Por favor, preencha os campos a seguir");
-			System.out.println("Nome:");
-			
-			System.out.println("Por favor, preencha os campos a seguir");
-			System.out.println("Nome:");
-			
-		} if (escolhaDeMenu == 2) {
-			
-			
-			
-		} else {
-			System.out.println("------Opção Inválida------");
+			switch (opcao) {
+			case CRIAR_REGISTRO: 
+				Cliente cliente = criarCliente();
+				boolean confirmarCliente = ClienteHibernate.salvarCliente(cliente);
+			break;
+			case FAZER_LOGIN:
+				
+			break;
+			case TERMINAR:
+				System.out.println("--------------------------------------");
+				System.out.println("------------Até a Próxima!------------");
+				System.out.println("--------------------------------------");
+				break;
+			default:
+				System.out.println("O sistema não reconhece esse comando. Tente novamente.");
+			break;
 		}
+
+	} while (opcao != TERMINAR)
+
+
+//			System.out.println("------Opção Inválida------");
 		
 		System.out.println("Testando git bash e git hub");
 		
@@ -86,8 +103,48 @@ public class PetPassMain {
 		for (Plano p : planos) {
 			System.out.println(p);
 		}
-		
 	}
+	
+	private static void menuInicial(){
+		System.out.println("------ Selecione o seu Login!------");
+		System.out.println("[1] - Criar Registro");
+		System.out.println("[2] - Fazer Login");
+		System.out.println("[100] - Terminar Programa");
+
+	}
+	
+		private static Cliente criarCliente() {
+			Scanner scan = new Scanner(System.in);
+			
+			System.out.println("Digite seu nome");
+			String nome = scan.next();
+			
+			System.out.println("Digite seu CPF");
+			String cpf = scan.next();
+				
+			System.out.println("Digite seu email");
+			String email = scan.next();
+			
+			System.out.println("Digite seu RG");
+			String rg = scan.next();
+			
+			System.out.println("Digite seu telefone");
+			String telefone = scan.next();
+
+			System.out.println("Digite seu Endereço");
+			String endereco = scan.next();
+
+			System.out.println("Digite sua Data de Nascimento (dd/mm/aaaa)");
+			String data = scan.next();
+			DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate dtNascimento = LocalDate.parse(data, dateFormat);
+			
+			System.out.println("Digite F para gênero feminino, e M para gênero masculino");
+			Character sexo = scan.next().charAt(0);
+
+			Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo, true);
+			return cliente;
+		}
 	
 	public static void geraInsertsCategoriaPet() {
 		

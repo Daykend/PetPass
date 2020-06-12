@@ -6,6 +6,8 @@ import java.util.List;
 
 import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.repository.ClienteHibernateDAO;
+import br.unit.petpass.exception.ClienteException;
+
 
 public class ClienteController {
 
@@ -28,7 +30,6 @@ public class ClienteController {
 		return clienteHibernateDAO.getClientById(codigoCliente);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Cliente> getAllClients(Integer codigoCliente) {
 		return clienteHibernateDAO.getAllClients(codigoCliente);
 	}
@@ -41,13 +42,42 @@ public class ClienteController {
 		}
 		clienteHibernateDAO.salvarCliente(cliente);
 	}
-}	
+	
+	public static void aniversario(Cliente cliente) {
+	    
+	    LocalDate dtNascimento = cliente.getDtNascimento();  
+	    
+	    if (dtNascimento.equals(LocalDate.now())){
+	    	System.out.println("A Equipe PETPASS te deseja um feliz aniversário!"); 
+	    } 
+	    if (!cliente.getSexo().equals("F") && !cliente.getSexo().equals("M")) {
+			throw new ClienteException("Digite 'm' ou 'f'");
+		}
+	}
+	
+	
+	
 	/*
-	 * public boolean confirmar(Cliente cliente) { if (email = unique) {
+	 * public boolean inserir(Cliente cliente) { String numero =
+	 * Conta.gerarNumero(); conta.setNumero(numero);
 	 * 
-	 * clienteHibernate.salvarCliente(cliente);
+	 * if (contaValidador.validaContaInserir(conta)) {
+	 * 
+	 * String senhaHash = SenhaUtil.geraHash(conta.getSenha());
+	 * conta.setSenha(senhaHash);
+	 * 
+	 * clienteController.inserir(conta.getCliente()); contaDao.inserir(conta);
 	 * 
 	 * return true; } return false; }
-	 * 
-	 * }
 	 */
+	
+	public boolean inserir(Cliente cliente) {
+		String contaValida = Cliente.numeroCadastro();
+		
+		if (contaValida != null) {		
+			return true;
+		}
+		return false;
+	}
+	
+}	

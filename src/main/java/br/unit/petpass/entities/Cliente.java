@@ -2,6 +2,8 @@ package br.unit.petpass.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Random;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +30,7 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoCliente;
 
-	@Column(name = "CPF", unique = true, length = 15, nullable = false) //Definindo Unique como 'ativo', NotNull
+	@Column(name = "CPF", unique = true, length = 15, nullable = false)
 	private String cpf;
 
 	@Column(name = "NOME", length = 80, nullable = false)
@@ -52,9 +54,12 @@ public class Cliente implements Serializable {
 	@Column(name = "SEXO", length = 1)
 	private String sexo;
 
-	@Column(name = "STATUS_CLIENTE")
-	private Integer statusCliente = 1;  //Duvida valor padrão
-	
-	//Duvida se o Cliente vai ter uma Lista dos pets ou não, e se vai ter que mapear isso, já que no banco não tem fk de pet em cliente e sim o contrário
+	public static String numeroCadastro() {
+		String uuid = UUID.randomUUID().toString();
+		return uuid;
+	}
+
+	// Duvida se o Cliente vai ter uma Lista dos pets ou não, e se vai ter que
+	// mapear isso, já que no banco não tem fk de pet em cliente e sim o contrário
 
 }

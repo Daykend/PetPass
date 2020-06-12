@@ -37,7 +37,6 @@ public class ClienteHibernateDAO {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
 			session.saveOrUpdate(cliente);
-			;
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction != null) {

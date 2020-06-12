@@ -6,84 +6,117 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Plano;
 
 public class PlanoHibernateDAO {
+	
+	static Session session;
+	
+	public void salvarPlano(Plano plano) {
+		Transaction transaction = null;
 
-	public void salvar(Plano plano) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
+	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		transaction = session.beginTransaction();
+		session.save(plano);
+		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+	} finally {
+		if (session != null) {
+			session.close();
+		}
+	}
+}
+
+public void updatePlano(Plano plano) {
+
+	Transaction transaction = null;
+
+	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		transaction = session.beginTransaction();
 		session.saveOrUpdate(plano);
 		transaction.commit();
-
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+	} finally {
+		if (session != null) {
+			session.close();
+		}
 	}
+}
 
-	public List<Plano> listAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "select c from Plano c";
-		Query<Plano> query = session.createQuery(hql);
-		return query.getResultList();
+public Plano getPlanoById(Integer codigoPlano) {
 
-	}
+	Transaction transaction = null;
+	Plano plano = null;
 
-	public Plano findById(Integer id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "select p from Plano p where p.codigoPlano = :id";
-		Query<Plano> query = session.createQuery(hql);
-		query.setParameter("id", id);
-		return query.getSingleResult();
-	}
-
-	public void updatePlanName(Integer id, String newName) {
-
-		Plano pl = findById(id);
-		pl.setNome(newName);
-
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(pl);
+	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		transaction = session.beginTransaction();
+		plano = session.get(Plano.class, codigoPlano);
 		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+		return null;
+	} finally {
+		if (session != null) {
+			session.close();
+		}
 	}
-	
-	public void updatePriceOfPlan(Integer id, Double preco) {
+	return plano;
+}
 
-		Plano pl = findById(id);
-		pl.setPreco(preco);
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(pl);
+public List<Plano> getAllPlano(Integer codigoPlano) {
+
+	Transaction transaction = null;
+	List<Plano> plano = null;
+	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		transaction = session.beginTransaction();
+		plano = session.createQuery("FROM PLANO").list();
 		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+		return null;
+	} finally {
+		if (session != null) {
+			session.close();
+		}
 	}
-	
-	public void updateInitialCreditOfPlan(Integer id, String newName) {
+	return plano;
+}
 
-		Plano pl = findById(id);
-		pl.setNome(newName);
+public void deletarPlano(Integer codigoPlano) {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(pl);
+	Transaction transaction = null;
+	Plano plano = null;
+
+	try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		transaction = session.beginTransaction();
+		plano = session.get(Plano.class, codigoPlano);
+		session.delete(plano);
 		transaction.commit();
+	} catch (Exception e) {
+		if (transaction != null) {
+			transaction.rollback();
+		}
+		e.printStackTrace();
+	} finally {
+		if (session != null) {
+			session.close();
+		}
 	}
-	
-	public void updatePlanStatus(Integer id, Integer status) {
-
-		Plano pl = findById(id);
-		pl.setStatusPlano(status);
-
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(pl);
-		transaction.commit();
-	}
-
-	public void deleteById(Integer id) {
-		Plano pl = findById(id);
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.delete(pl);
-		transaction.commit();
-	}
+}
 }

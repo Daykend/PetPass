@@ -12,7 +12,7 @@ import br.unit.petpass.controller.ClienteController;
 
 public class ClienteView {
 	
-		private static Cliente criarCliente() {
+		public static Cliente criarCliente() {
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("Digite seu nome");
@@ -41,7 +41,7 @@ public class ClienteView {
 		LocalDate dtNascimento = LocalDate.parse(data, dateFormat); 
 		try {
 			dtNascimento = LocalDate.parse(data, dateFormat);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			throw new ClienteException("Data inválida");
 		}
 		

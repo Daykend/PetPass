@@ -5,8 +5,8 @@ import java.time.Period;
 import java.util.List;
 
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.repository.ClienteHibernateDAO;
 import br.unit.petpass.exception.ClienteException;
+import br.unit.petpass.repository.ClienteHibernateDAO;
 
 
 public class ClienteController {
@@ -18,6 +18,16 @@ public class ClienteController {
 	}
 
 	public boolean salvarCliente(Cliente cliente) {
+		String clienteCPFCadastrado = cliente.getCpf();
+		Period period = Period.between(LocalDate.now(), cliente.getDtNascimento());
+		
+		if (clienteCPFCadastrado != null) {
+			throw new ClienteException("Já! cadastrado!");
+		}
+		
+		if (period.getYears() < 18) {
+			throw new RuntimeException("Não é possível cadastrar clientes menores de 18 anos");
+		}
 		clienteHibernateDAO.salvarCliente(cliente);
 		return true;
 	}
@@ -33,28 +43,6 @@ public class ClienteController {
 	public List<Cliente> getAllClients(Integer codigoCliente) {
 		return clienteHibernateDAO.getAllClients(codigoCliente);
 	}
-
-	public void confirmarIdade(Cliente cliente) {
-		Period period = Period.between(LocalDate.now(), cliente.getDtNascimento());
-
-		if (period.getYears() < 18) {
-			throw new RuntimeException("Não é possível cadastrar clientes menores de 18 anos");
-		}
-		clienteHibernateDAO.salvarCliente(cliente);
-	}
-	
-	public static void aniversario(Cliente cliente) {
-	    
-	    LocalDate dtNascimento = cliente.getDtNascimento();  
-	    
-	    if (dtNascimento.equals(LocalDate.now())){
-	    	System.out.println("A Equipe PETPASS te deseja um feliz aniversário!"); 
-	    } 
-	    if (!cliente.getSexo().equals("F") && !cliente.getSexo().equals("M")) {
-			throw new ClienteException("Digite 'm' ou 'f'");
-		}
-	}
-	
 	
 	
 	/*

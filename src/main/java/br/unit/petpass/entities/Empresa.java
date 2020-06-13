@@ -39,7 +39,4 @@ public class Empresa implements Serializable {
 	@Column(name = "ENDERECO", length = 250, nullable = false)
 	private String endereco;
 
-	@Column(name = "STATUS_EMPRESA")
-	private Integer statusEmpresa = 1; // Tô colocando 1 como 'padrão' para ser como ta no banco...
-
 }

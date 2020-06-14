@@ -18,13 +18,9 @@ public class ClienteController {
 	}
 
 	public boolean salvarCliente(Cliente cliente) {
-		String clienteCPFCadastrado = cliente.getCpf();
-		Period period = Period.between(LocalDate.now(), cliente.getDtNascimento());
-		
-		if (clienteCPFCadastrado != null) {
-			throw new ClienteException("Já! cadastrado!");
-		}
-		
+
+		Period period = Period.between(cliente.getDtNascimento(), LocalDate.now());
+				
 		if (period.getYears() < 18) {
 			throw new RuntimeException("Não é possível cadastrar clientes menores de 18 anos");
 		}

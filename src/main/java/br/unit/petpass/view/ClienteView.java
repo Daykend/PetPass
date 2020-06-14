@@ -13,6 +13,7 @@ import br.unit.petpass.controller.ClienteController;
 public class ClienteView {
 	
 		public static Cliente criarCliente() {
+		ClienteController clienteController = new ClienteController();
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("Digite seu nome");
@@ -29,12 +30,11 @@ public class ClienteView {
 		
 		System.out.println("Digite seu telefone");
 		String telefone = scan.next();
-
+		
+		scan.nextLine();
 		System.out.println("Digite seu Endereço");
 		String endereco = scan.nextLine();
-		System.out.println("");
-		System.out.println("");
-		
+
 		System.out.println("Digite sua Data de Nascimento (dd/mm/aaaa)");
 		String data = scan.next();
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -51,6 +51,7 @@ public class ClienteView {
 		System.out.println("Cadastro de Cliente concluido. Você Voltará ao menu inicial!");
 		
 		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo);
+		clienteController.salvarCliente(cliente);
 		return cliente;
 		}
 	 

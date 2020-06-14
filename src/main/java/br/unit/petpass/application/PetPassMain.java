@@ -19,6 +19,7 @@ public class PetPassMain {
 		Scanner scan = new Scanner(System.in);
 		HibernateUtil.getSessionFactory().openSession();
 		EmpresaView empresaView = new EmpresaView();
+		ClienteView clienteView = new ClienteView();
 
 		int opcao = -1;
 		do {
@@ -34,6 +35,8 @@ public class PetPassMain {
 
 			case CRIAR_REGISTRO:
 				empresaView.criarEmpresa();
+//				clienteView.criarCliente();
+				
 				
 				break;
 

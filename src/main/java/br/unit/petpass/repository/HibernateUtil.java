@@ -9,6 +9,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 import br.unit.petpass.entities.Cliente;
+import br.unit.petpass.entities.Empresa;
 
 public class HibernateUtil {
 	
@@ -21,7 +22,7 @@ public class HibernateUtil {
 
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                settings.put(Environment.URL, "jdbc:sqlserver://Daykend-PC\\SQLEXPRESS:1433;databaseName=UIB");
+                settings.put(Environment.URL, "jdbc:sqlserver://DEBORA\\SQLEXPRESS:1433;databaseName=UIB");
                 settings.put(Environment.USER, "dba");
                 settings.put(Environment.PASS, "123");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
@@ -29,7 +30,7 @@ public class HibernateUtil {
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.HBM2DDL_AUTO, "update");
                 configuration.setProperties(settings);
-                configuration.addAnnotatedClass(Cliente.class);
+                configuration.addAnnotatedClass(Empresa.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);

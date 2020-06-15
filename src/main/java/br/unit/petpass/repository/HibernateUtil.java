@@ -22,7 +22,7 @@ public class HibernateUtil {
 
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                settings.put(Environment.URL, "jdbc:sqlserver://DEBORA\\SQLEXPRESS:1433;databaseName=UIB");
+                settings.put(Environment.URL, "jdbc:sqlserver:LAPTOP-STQI672Q\\SQLEXPR:1433;databaseName=UIB");
                 settings.put(Environment.USER, "dba");
                 settings.put(Environment.PASS, "123");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
@@ -31,7 +31,6 @@ public class HibernateUtil {
                 settings.put(Environment.HBM2DDL_AUTO, "update");
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Empresa.class);
-                configuration.addAnnotatedClass(Cliente.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);

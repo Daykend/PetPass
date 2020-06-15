@@ -1,12 +1,8 @@
 package br.unit.petpass.controller;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
-import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Empresa;
-import br.unit.petpass.exception.ClienteException;
 import br.unit.petpass.repository.EmpresaHibernateDAO;
 
 public class EmpresaController {
@@ -23,7 +19,7 @@ public class EmpresaController {
 		return true;
 	}
 
-	public List<Empresa> listar() {
+	public List<Empresa> listarEmpresa() {
 		return empresaHibernateDAO.listAll();
 	}
 

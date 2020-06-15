@@ -5,13 +5,12 @@ import java.time.Period;
 import java.util.List;
 
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.exception.ClienteException;
 import br.unit.petpass.repository.ClienteHibernateDAO;
 
 
 public class ClienteController {
 
-	private ClienteHibernateDAO clienteHibernateDAO;
+	private static ClienteHibernateDAO clienteHibernateDAO;
 
 	public ClienteController() {
 		clienteHibernateDAO = new ClienteHibernateDAO();
@@ -20,7 +19,7 @@ public class ClienteController {
 	public boolean salvarCliente(Cliente cliente) {
 
 		Period period = Period.between(cliente.getDtNascimento(), LocalDate.now());
-				
+
 		if (period.getYears() < 18) {
 			throw new RuntimeException("Não é possível cadastrar clientes menores de 18 anos");
 		}
@@ -36,25 +35,10 @@ public class ClienteController {
 		return clienteHibernateDAO.getClientById(codigoCliente);
 	}
 	
-	public List<Cliente> getAllClients(Integer codigoCliente) {
-		return clienteHibernateDAO.getAllClients(codigoCliente);
+	public static List<Cliente> getAllClients() {
+		return clienteHibernateDAO.getAllClients();
 	}
-	
-	
-	/*
-	 * public boolean inserir(Cliente cliente) { String numero =
-	 * Conta.gerarNumero(); conta.setNumero(numero);
-	 * 
-	 * if (contaValidador.validaContaInserir(conta)) {
-	 * 
-	 * String senhaHash = SenhaUtil.geraHash(conta.getSenha());
-	 * conta.setSenha(senhaHash);
-	 * 
-	 * clienteController.inserir(conta.getCliente()); contaDao.inserir(conta);
-	 * 
-	 * return true; } return false; }
-	 */
-	
+		
 	public boolean inserir(Cliente cliente) {
 		String contaValida = Cliente.numeroCadastro();
 		
@@ -62,6 +46,11 @@ public class ClienteController {
 			return true;
 		}
 		return false;
+	}
+	
+	public void deletarCliente(Cliente cliente) {
+
+		clienteHibernateDAO.deletarCliente(cliente);
 	}
 	
 }	

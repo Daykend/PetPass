@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.Cliente;
+import br.unit.petpass.entities.Empresa;
 
 public class ClienteHibernateDAO {
 	static Session session;
@@ -73,37 +75,21 @@ public class ClienteHibernateDAO {
 		return cliente;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Cliente> getAllClients(Integer codigoCliente) {
+	public List<Cliente> getAllClients() {
 
-		Transaction transaction = null;
-		List<Cliente> cliente = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-			cliente = session.createQuery("FROM CLIENTE").list();
-			transaction.commit();
-		} catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			e.printStackTrace();
-			return null;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-		return cliente;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "select c from Cliente c";
+		Query<Cliente> query = session.createQuery(hql);
+		return query.getResultList();
 	}
 
-	public void deletarCliente(Integer codigoCliente) {
+	public void deletarCliente(Cliente cliente) {
 
 		Transaction transaction = null;
-		Cliente cliente = null;
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
-			cliente = session.get(Cliente.class, codigoCliente);
+			cliente = session.get(Cliente.class, cliente);
 			session.delete(cliente);
 			transaction.commit();
 		} catch (Exception e) {

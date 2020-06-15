@@ -6,206 +6,148 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.entities.Empresa;
 import br.unit.petpass.entities.Servicos;
 
 public class ServicosHibernateDAO {
+	
+	static Session session;
 
-	public void salvar(Empresa empresa) {
+	public void salvar(Servicos servicos) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		session.saveOrUpdate(empresa);
+		session.saveOrUpdate(servicos);
 		transaction.commit();
 
 	}
 
-	public List<Empresa> listAll() {
+	public List<Servicos> listAll() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "select c from Empresa c";
-		Query<Empresa> query = session.createQuery(hql);
+		String hql = "select c from Servicos c";
+		Query<Servicos> query = session.createQuery(hql);
 		return query.getResultList();
 
 	}
 
-	public Empresa findById(Integer id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "select p from Empresa p where p.codigoEmpresa = :id";
-		Query<Empresa> query = session.createQuery(hql);
-		query.setParameter("id", id);
-		return query.getSingleResult();
-	}
+	public Servicos getServicosById(Integer codigoServicos) {
 
-	public void updateCompanyName(Integer id, String newName) {
-
-		findById(id).setNome(newName);
-
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(findById(id));
-		transaction.commit();
-	}
-
-	
-public void salvarServicos(Servicos servicos) {
-		
 		Transaction transaction = null;
-		
-		try(Session session = HibernateUtil.getSessionFactory().openSession()){
-			transaction = session.beginTransaction();  
-			session.save(servicos);
+		Servicos servicos = null;
+
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			servicos = session.get(Servicos.class, codigoServicos);
 			transaction.commit();
 		} catch (Exception e) {
-			if(transaction != null) {
-			  transaction.rollback();
+			if (transaction != null) {
+				transaction.rollback();
 			}
-		}
-	}
-	
-	public void updateServicos(Servicos servicos) {
-			
-		Transaction transaction = null;
-		
-		try(Session session = HibernateUtil.getSessionFactory().openSession()){
-			transaction = session.beginTransaction();  
-			session.saveOrUpdate(servicos);
-			transaction.commit();
-		} catch (Exception e) {
-			if(transaction != null) {
-			  transaction.rollback();
-			}
-		}
-	}
-	
-	public Servicos getServicoById(Integer codigoServico) {
-			
-			Transaction transaction = null;
-			Servicos servicos = null;
-			
-			try(Session session = HibernateUtil.getSessionFactory().openSession()){
-				transaction = session.beginTransaction();  
-				servicos = session.get(Servicos.class, codigoServico);
-				transaction.commit();
-			} catch (Exception e) {
-				if(transaction != null) {
-				  transaction.rollback();
-				}
-			}
-			return servicos;
-		}
-	
-	@SuppressWarnings("unchecked")
-	public List<Servicos> getAllServicos(Integer codigoServico) {
-		
-		Transaction transaction = null; 
-		List<Servicos> servicos = null;
-		
-		try(Session session = HibernateUtil.getSessionFactory().openSession()){
-			transaction = session.beginTransaction();  
-			servicos = session.createQuery("FROM SERVICOS").list();
-			transaction.commit();
-		} catch (Exception e) {
-			if(transaction != null) {
-			  transaction.rollback();
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (session != null) {
+				session.close();
+				;
 			}
 		}
 		return servicos;
-	}	
-	
+	}
+
+	public void updateServicosName(Integer codigoServicos, String newName) {
+
+		getServicosById(codigoServicos).setNome(newName);
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		session.update(getServicosById(codigoServicos));
+		transaction.commit();
+	}
+
+	public void salvarServicos(Integer codigoServicos) {
+
+		Transaction transaction = null;
+
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			session.save(codigoServicos);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			if (session != null) {
+				session.close();
+				;
+			}
+		}
+		return;
+	}
+
+	public void updateServicos(Integer codigoServicos) {
+
+		Transaction transaction = null;
+
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			session.saveOrUpdate(codigoServicos);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			if (session != null) {
+				session.close();
+				;
+			}
+		}
+		return;
+	}
+
 	public void deletarServicos(Integer codigoServicos) {
-		
+
 		Transaction transaction = null;
 		Servicos servicos = null;
-		
-		try(Session session = HibernateUtil.getSessionFactory().openSession()){
-			transaction = session.beginTransaction();  
+
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
 			servicos = session.get(Servicos.class, codigoServicos);
 			session.delete(servicos);
 			transaction.commit();
 		} catch (Exception e) {
-			if(transaction != null) {
-			  transaction.rollback();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+		if (session != null) {
+			session.close();
+			;
+		}
+	}
+	return;
+	}
+	public Servicos acharServicos(Integer codigoServicos) {
+		
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			Query query = session.createQuery("select s from Servicos s where s.codigoServicos = " + codigoServicos);
+			List<Servicos> servicos = query.list();
+			if (servicos.size() > 0) {
+				return servicos.get(0);
+			}
+			else {
+				return null;
+			}
+		} catch(Exception e) {
+			if(null != session.getTransaction()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return null;
+		} finally {
+			if(session != null) {
+				session.close();
 			}
 		}
 	}
 }
-	
-		
-//		public void updateCompanyStatus(Integer id, Integer status) {
-//
-//		findById(id).setStatusEmpresa(status);
-//
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		Transaction transaction = session.beginTransaction();
-//		session.update(findById(id));
-//		transaction.commit();
-//	}
-//
-//	public void deleteById(Integer id) {
-//
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		Transaction transaction = session.beginTransaction();
-//		session.delete(findById(id));
-//		transaction.commit();
-//	/
-	
-	
-	/*
-	 * public void salvar(Empresa empresa) { Session session =
-	 * HibernateUtil.getSessionFactory().openSession(); Transaction transaction =
-	 * session.beginTransaction(); session.saveOrUpdate(empresa);
-	 * transaction.commit();
-	 * 
-	 * }
-	 * 
-	 * public List<Empresa> listAll() { Session session =
-	 * HibernateUtil.getSessionFactory().openSession(); String hql =
-	 * "select c from Empresa c"; Query<Empresa> query = session.createQuery(hql);
-	 * return query.getResultList();
-	 * 
-	 * }
-	 * 
-	 * public Empresa findById(Integer id) { Session session =
-	 * HibernateUtil.getSessionFactory().openSession(); String hql =
-	 * "select p from Empresa p where p.codigoEmpresa = :id"; Query<Empresa> query =
-	 * session.createQuery(hql); query.setParameter("id", id); return
-	 * query.getSingleResult(); }
-	 * 
-	 * public void updateCompanyName(Integer id, String newName) {
-	 * 
-	 * findById(id).setNome(newName);
-	 * 
-	 * Session session = HibernateUtil.getSessionFactory().openSession();
-	 * Transaction transaction = session.beginTransaction();
-	 * session.update(findById(id)); transaction.commit(); }
-	 * 
-	 * public void updateCompanyPhone(Integer id, String telefone) {
-	 * 
-	 * findById(id).setTelefone(telefone);
-	 * 
-	 * Session session = HibernateUtil.getSessionFactory().openSession();
-	 * Transaction transaction = session.beginTransaction();
-	 * session.update(findById(id)); transaction.commit(); }
-	 * 
-	 * public void updateCompanyAddress(Integer id, String endereco) {
-	 * 
-	 * findById(id).setEndereco(endereco);
-	 * 
-	 * Session session = HibernateUtil.getSessionFactory().openSession();
-	 * Transaction transaction = session.beginTransaction();
-	 * session.update(findById(id)); transaction.commit(); }
-	 * 
-	 * public void updateCompanyStatus(Integer id, boolean status) {
-	 * 
-	 * findById(id).setStatusEmpresa(status);
-	 * 
-	 * Session session = HibernateUtil.getSessionFactory().openSession();
-	 * Transaction transaction = session.beginTransaction();
-	 * session.update(findById(id)); transaction.commit(); }
-	 * 
-	 * public void deleteById(Integer id) {
-	 * 
-	 * Session session = HibernateUtil.getSessionFactory().openSession();
-	 * Transaction transaction = session.beginTransaction();
-	 * session.delete(findById(id)); transaction.commit(); }
-	 */

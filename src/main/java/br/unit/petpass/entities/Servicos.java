@@ -32,7 +32,4 @@ public class Servicos implements Serializable {
 	@Column(name = "CUSTOCREDITO")
 	private Integer custoCredito;
 
-	@Column(name = "STATUS_SERVICOS")
-	private boolean statusServicos = true;
-
 }

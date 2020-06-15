@@ -33,7 +33,4 @@ public class Plano implements Serializable {
 	@Column(name = "PACOTEINICIALCREDITO", nullable = false)
 	private Integer pacoteInicialCredito;
 
-	@Column(name = "STATUS_PLANO")
-	private Integer statusPlano = 1;
-
 }

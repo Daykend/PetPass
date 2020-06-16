@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,6 +24,7 @@ public class Plano implements Serializable {
 
 	@Id
 	@Column(name = "CODIGOPLANO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoPlano;
 
 	@Column(name = "NOME", length = 25, nullable = false)

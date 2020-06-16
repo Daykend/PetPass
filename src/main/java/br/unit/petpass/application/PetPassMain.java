@@ -8,7 +8,6 @@ import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
 
 import java.util.Scanner;
 
-import br.unit.petpass.repository.HibernateUtil;
 import br.unit.petpass.view.ClienteView;
 //import br.unit.petpass.view.EmpresaView;
 import br.unit.petpass.view.PlanoView;
@@ -18,11 +17,11 @@ public class PetPassMain {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		HibernateUtil.getSessionFactory().openSession();
-		//EmpresaView empresaView = new EmpresaView();
+
 		ClienteView clienteView = new ClienteView();
 		//ServicosView servicosView = new ServicosView();
 		PlanoView planoView = new PlanoView();
+		//EmpresaView empresaView = new EmpresaView();
 		
 		int opcao = -1;
 		do {
@@ -68,18 +67,8 @@ public class PetPassMain {
 	}
 
 	private static void menuInicial() {
-		System.out.println("------ Você está aqui para tratar de Assuntos de: ------"
-				+ "[1] - Cliente"
-				+ "[2] - Empresa"
-				);
-		
-
-		
-		System.out.println("[1] - Cadastrar Empresa");
-		System.out.println("[2] - Alterar Empresa");
-		System.out.println("[3] - Deletar Empresa");
-		System.out.println("[4] - Mostrar Cadastros");
-		System.out.println("[100] - Terminar Programa");
+		System.out.println("------ Você está aqui para tratar de Assuntos de: ------");
+		System.out.println("[1] - Cliente  [2] - Plano");
 
 	}
 

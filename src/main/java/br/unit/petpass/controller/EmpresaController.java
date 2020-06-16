@@ -7,13 +7,13 @@ import br.unit.petpass.repository.EmpresaHibernateDAO;
 
 public class EmpresaController {
 
-	private EmpresaHibernateDAO empresaHibernateDAO;
+	private static EmpresaHibernateDAO empresaHibernateDAO;
 
 	public EmpresaController() {
 		empresaHibernateDAO = new EmpresaHibernateDAO();
 	}
 
-	public boolean salvar(Empresa empresa) {
+	public static boolean salvar(Empresa empresa) {
 
 		empresaHibernateDAO.salvar(empresa);
 		return true;

@@ -12,9 +12,8 @@ public class PlanoHibernateDAO {
 
 	static Session session;
 
-	public void salvarPlano() {
+	public void salvarPlano(Plano plano) {
 		Transaction transaction = null;
-		Plano plano = null;
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
@@ -34,25 +33,27 @@ public class PlanoHibernateDAO {
 
 	public Plano getPlanoById(Integer codigoPlano) {
 
-		Transaction transaction = null;
-		Plano plano = null;
-
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-			plano = session.get(Plano.class, codigoPlano);
-			transaction.commit();
-		} catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			Query query = session.createQuery("select e from Plano e where e.id = " + codigoPlano);
+			List<Plano> plano = query.list();
+			if (plano.size() > 0) {
+				return plano.get(0);
 			}
-			e.printStackTrace();
+			else {
+				return null;
+			}
+		} catch(Exception sqlException) {
+			if(null != session.getTransaction()) {
+				session.getTransaction().rollback();
+			}
+			sqlException.printStackTrace();
 			return null;
 		} finally {
-			if (session != null) {
+			if(session != null) {
 				session.close();
 			}
 		}
-		return plano;
 	}
 
 	public List<Plano> listarAll() {
@@ -83,10 +84,9 @@ public class PlanoHibernateDAO {
 		}
 	}
 	
-	public void deletarPlano(Plano Plano) {
+	public void deletarPlano(Plano plano) {
 
 		Transaction transaction = null;
-		Plano plano = null;
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();

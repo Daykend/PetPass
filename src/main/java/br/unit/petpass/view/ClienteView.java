@@ -11,16 +11,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import br.unit.petpass.controller.ClienteController;
-import br.unit.petpass.controller.PlanoController;
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.entities.Plano;
 import br.unit.petpass.exception.ClienteException;
 
 public class ClienteView {
 	ClienteController clienteController = new ClienteController();
 	Scanner scan = new Scanner(System.in);
 	
-	public static Cliente criarCliente() {
+	public void criarCliente() {
 		ClienteController clienteController = new ClienteController();
 		Scanner scan = new Scanner(System.in);
 
@@ -60,10 +58,10 @@ public class ClienteView {
 
 		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo);
 		clienteController.salvarCliente(cliente);
-		return cliente;
+
 	}
 	
-	public static void listarCLiente() {
+	public void listarCLiente() {
 		new ClienteController();
 
 		java.util.List<Cliente> clientes = ClienteController.getAllClients();
@@ -81,13 +79,113 @@ public class ClienteView {
 		int codigoCliente = scan.nextInt();
 		cliente = clienteController.getClientById(codigoCliente);
 		scan.nextLine();
+		
+		int menu = -1;
+		do {
+			Scanner scan = new Scanner(System.in);
+			System.out.println("O que deseja modificar? Escolha uma opção:");
+			System.out.println("[1] Nome, [2] CPF, [3] email, [4] RG, [5] Telefone,"
+					+ "[6] Endereço, [7] Data de Nascimento [100] Sair");
+			menu = scan.nextInt();
 
-		System.out.println("Digite o nome novo do Cliente:");
-		String nome = scan.nextLine();
-		cliente.setNome(nome);
+			switch (menu) {
 
-		clienteController.updateCliente(cliente);
-		System.out.println("Alteração realizada");
+			case 1:
+				scan.nextLine();
+				System.out.println("Digite o nome novo:");
+				String nome = scan.nextLine();
+				cliente.setNome(nome);
+
+				clienteController.updateCliente(cliente);;
+				System.out.println("Alteração realizada");
+
+				break;
+
+			case 2:
+				scan.nextLine();
+				System.out.println("Digite o CPF novo:");
+				String cpf = scan.nextLine();
+				cliente.setCpf(cpf);
+
+				clienteController.updateCliente(cliente);;
+				System.out.println("Alteração realizada");
+
+				break;
+
+			case 3:
+				scan.nextLine();
+				System.out.println("Digite o email novo:");
+				String email = scan.nextLine();
+				cliente.setEmail(email);
+
+				clienteController.updateCliente(cliente);
+				System.out.println("Alteração realizada");
+
+				break;
+				
+			case 4:
+				scan.nextLine();
+				System.out.println("Digite o RG novo:");
+				String rg = scan.nextLine();
+				cliente.setRg(rg);
+
+				clienteController.updateCliente(cliente);
+				System.out.println("Alteração realizada");
+
+				break;
+				
+			case 5:
+				scan.nextLine();
+				System.out.println("Digite o telefone novo:");
+				String telefone = scan.nextLine();
+				cliente.setTelefone(telefone);
+
+				clienteController.updateCliente(cliente);
+				System.out.println("Alteração realizada");
+
+				break;
+				
+			case 6:
+				scan.nextLine();
+				System.out.println("Digite o endereço novo:");
+				String endereco = scan.nextLine();
+				cliente.setEndereco(endereco);
+
+				clienteController.updateCliente(cliente);
+				System.out.println("Alteração realizada");
+
+				break;
+				
+			case 7:
+				scan.nextLine();
+				System.out.println("Digite a nova data de nascimento (dd/mm/yyyy):");
+				String data = scan.nextLine();
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate dtNascimento = LocalDate.parse(data, dateFormat);
+				try {
+					dtNascimento = LocalDate.parse(data, dateFormat);
+				} catch (Exception e) {
+					throw new ClienteException("Data inválida");
+				}
+				cliente.setDtNascimento(dtNascimento);
+
+				clienteController.updateCliente(cliente);
+				System.out.println("Alteração realizada");
+
+				break;
+				
+			case TERMINAR:
+				System.out.println("--------------------------------------");
+				System.out.println("------------Até a Próxima!------------");
+				System.out.println("--------------------------------------");
+				System.exit(0);
+
+			default:
+				System.out.println("Opção inválida.");
+				break;
+			}
+		} while (menu != TERMINAR);
+		scan.close();
 	}
 
 	public void deletarCliente() {
@@ -103,11 +201,9 @@ public class ClienteView {
 		System.out.println("Cliente " + cliente + " deletado!");
 	}
 	
-	public static void menuCliente() {
+	public void menuCliente() {
 		
 		Scanner scan = new Scanner(System.in);
-		ClienteController clienteController = new ClienteController();
-		Cliente cliente = new Cliente();
 		
 		int menu = -1;
 		do {
@@ -115,24 +211,24 @@ public class ClienteView {
 			System.out.println("Bem vindo(a) as opções de Cliente. Você gostaria de:");
 			System.out.println("[1] - Criar Cadastro de Cliente");
 			System.out.println("[2] - Editar Cadastro de Cliente");
-			System.out.println("[3] - Listar Cadastro de Clientes");
-			System.out.println("[4] - Deletar Cadastro de Cliente");
+			System.out.println("[3] - Deletar Cadastro de Clientes");
+			System.out.println("[4] - Mostrar Cadastros");
+			System.out.println("[100] - Sair");
 			
 			menu = scan.nextInt();
 			
 			switch (menu)  {
 			case CRIAR_CADASTRO:
 				criarCliente();
-				clienteController.salvarCliente(cliente);
 				break;
 			case ALTERAR_CADASTRO:
-				clienteController.updateCliente(cliente);
+				atualizarCliente();
 				break;
 			case MOSTRAR_CADASTROS:
 				listarCLiente();
 				break;
 			case DELETAR_CADASTRO:
-				clienteController.deletarCliente(cliente);
+				deletarCliente();
 				break;				
 			case TERMINAR:
 				System.out.println("--------------------------------------");

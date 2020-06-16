@@ -14,7 +14,6 @@ public class EmpresaHibernateDAO {
 	static Session session;
 	
 	public void salvar(Empresa empresa) {
-
 		Transaction transaction = null;
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {

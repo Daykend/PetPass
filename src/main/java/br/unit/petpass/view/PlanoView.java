@@ -14,11 +14,13 @@ import br.unit.petpass.entities.Plano;
 public class PlanoView {
 	Scanner scan = new Scanner(System.in);
 
-	public static Plano criarPlano() {
+	public void criarPlano() {
+
+		PlanoController planoController = new PlanoController();
 
 		Scanner scan = new Scanner(System.in);
 
-		System.out.println("Digite o nome do nove plano:");
+		System.out.println("Digite o nome do novo plano:");
 		String nome = scan.nextLine();
 		System.out.println("");
 
@@ -26,11 +28,10 @@ public class PlanoView {
 		double preco = scan.nextDouble();
 
 		System.out.println("Digite a quantidade de pontos disponível no plano:");
-		int pacoteInicialCredito = scan.nextInt();
+		Integer pacoteInicialCredito = scan.nextInt();
 
 		Plano plano = new Plano(null, nome, preco, pacoteInicialCredito);
-		PlanoController.salvarPlano(plano);
-		return plano;
+		planoController.salvarPlano(plano);
 
 	}
 
@@ -52,13 +53,63 @@ public class PlanoView {
 		int codigoPlano = scan.nextInt();
 		plano = planoController.getPlano(codigoPlano);
 		scan.nextLine();
+		
+		
+		int menu = -1;
+		do {
+			Scanner scan = new Scanner(System.in);
+			System.out.println("O que deseja modificar? Escolha uma opção:");
+			System.out.println("[1] Nome, [2] Preço, [3] Pacote [100] Sair");
+			menu = scan.nextInt();
 
-		System.out.println("Digite o nome novo do plano:");
-		String nome = scan.nextLine();
-		plano.setNome(nome);
+			switch (menu) {
 
-		PlanoController.atualizar(plano);
-		System.out.println("Alteração realizada");
+			case 1:
+				scan.nextLine();
+				System.out.println("Digite o nome novo do plano:");
+				String nome = scan.nextLine();
+				plano.setNome(nome);
+
+				planoController.atualizar(plano);
+				System.out.println("Alteração realizada");
+
+				break;
+
+			case 2:
+				scan.nextLine();
+				System.out.println("Digite o preço novo do plano:");
+				double preco = scan.nextDouble();
+				plano.setPreco(preco);
+
+				planoController.atualizar(plano);
+				System.out.println("Alteração realizada");
+
+				break;
+
+			case 3:
+				scan.nextLine();
+				System.out.println("Digite o preço novo do plano:");
+				int pacote = scan.nextInt();
+				plano.setPacoteInicialCredito(pacote);
+
+				planoController.atualizar(plano);
+				System.out.println("Alteração realizada");
+
+				break;
+				
+			case TERMINAR:
+				System.out.println("--------------------------------------");
+				System.out.println("------------Até a Próxima!------------");
+				System.out.println("--------------------------------------");
+				System.exit(0);
+
+			default:
+				System.out.println("Opção inválida.");
+				break;
+			}
+		} while (menu != TERMINAR);
+		scan.close();
+						
 	}
 
 	public void deletarPlano() {
@@ -76,9 +127,6 @@ public class PlanoView {
 
 	public void menuPlano() {
 
-		Scanner scan = new Scanner(System.in);
-		Plano plano = new Plano();
-
 		int menu = -1;
 		do {
 
@@ -86,18 +134,16 @@ public class PlanoView {
 			System.out.println("[1] - Criar Cadastro de Plano");
 			System.out.println("[2] - Editar Cadastro de Plano");
 			System.out.println("[3] - Listar Cadastro de Plano");
-			System.out.println("[4] - Deletar Cadastro de P");
+			System.out.println("[4] - Deletar Cadastro de Plano");
 
 			menu = scan.nextInt();
 
 			switch (menu) {
 			case CRIAR_CADASTRO:
 				criarPlano();
-				PlanoController.salvarPlano(plano);
 				break;
 			case ALTERAR_CADASTRO:
 				atualizarPlano();
-				PlanoController.salvarPlano(plano);
 				break;
 			case MOSTRAR_CADASTROS:
 				listarPlano();
@@ -119,22 +165,4 @@ public class PlanoView {
 		} while (menu != TERMINAR);
 		scan.close();
 	}
-
-//		 System.out.println("Atualizar Plano");
-//		 PlanoHibernateDAO.updatePlano(3, 450.0);
-
-	/*
-	 * System.out.println("Atualizar Nome do Plano");
-	 * PlanoHibernateDAO.updatePlanName(1, "PetPass Basic");
-	 * 
-	 * System.out.println("Atualizar Pacote Inical de Credito do Plano");
-	 * PlanoHibernateDAO.updatePriceOfPlan(3, 450.0);
-	 * 
-	 * System.out.println("Atualizar Status do Plano (1/0)");
-	 * PlanoHibernateDAO.updatePlanStatus(1, 0);
-	 * 
-	 * 
-	 * PlanoHibernateDAO.deletarPlano(4); for (Plano p : planos) {
-	 * System.out.println(p); }
-	 */
 }

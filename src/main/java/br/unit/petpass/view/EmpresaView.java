@@ -1,11 +1,6 @@
 package br.unit.petpass.view;
 
 import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
-import static br.unit.petpass.view.ViewConstantes.UPCPFCNPJ;
-import static br.unit.petpass.view.ViewConstantes.UPENDERECO;
-import static br.unit.petpass.view.ViewConstantes.UPNOME;
-import static br.unit.petpass.view.ViewConstantes.UPTELEFONE;
-
 import org.hibernate.mapping.List;
 
 import java.util.Scanner;
@@ -68,7 +63,7 @@ public class EmpresaView {
 
 			switch (menu) {
 
-			case UPNOME:
+			case 1:
 				scan.nextLine();
 				System.out.println("Digite o nome novo da empresa:");
 				String nome = scan.nextLine();
@@ -79,7 +74,7 @@ public class EmpresaView {
 
 				break;
 
-			case UPCPFCNPJ:
+			case 2:
 				scan.nextLine();
 				System.out.println("Digite o novo CNPJ:");
 				String cnpj = scan.next();
@@ -90,7 +85,7 @@ public class EmpresaView {
 
 				break;
 
-			case UPTELEFONE:
+			case 3:
 				scan.nextLine();
 				System.out.println("Digite o novo Telefone:");
 				String telefone = scan.next();
@@ -101,7 +96,7 @@ public class EmpresaView {
 
 				break;
 
-			case UPENDERECO:
+			case 4:
 				scan.nextLine();
 				System.out.println("Digite o novo Endereço:");
 				String endereco = scan.next();

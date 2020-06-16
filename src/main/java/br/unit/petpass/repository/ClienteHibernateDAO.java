@@ -7,13 +7,11 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.entities.Empresa;
 
 public class ClienteHibernateDAO {
 	static Session session;
 
 	public void salvarCliente(Cliente cliente) {
-
 		Transaction transaction = null;
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -54,25 +52,27 @@ public class ClienteHibernateDAO {
 
 	public Cliente getClientById(Integer codigoCliente) {
 
-		Transaction transaction = null;
-		Cliente cliente = null;
-
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-			cliente = session.get(Cliente.class, codigoCliente);
-			transaction.commit();
-		} catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			Query query = session.createQuery("select e from Cliente e where e.id = " + codigoCliente);
+			List<Cliente> cliente = query.list();
+			if (cliente.size() > 0) {
+				return cliente.get(0);
 			}
-			e.printStackTrace();
+			else {
+				return null;
+			}
+		} catch(Exception sqlException) {
+			if(null != session.getTransaction()) {
+				session.getTransaction().rollback();
+			}
+			sqlException.printStackTrace();
 			return null;
 		} finally {
-			if (session != null) {
+			if(session != null) {
 				session.close();
 			}
 		}
-		return cliente;
 	}
 
 	public List<Cliente> getAllClients() {
@@ -89,7 +89,7 @@ public class ClienteHibernateDAO {
 
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			transaction = session.beginTransaction();
-			cliente = session.get(Cliente.class, cliente);
+//			cliente = session.get(Cliente.class, cliente);
 			session.delete(cliente);
 			transaction.commit();
 		} catch (Exception e) {
@@ -103,12 +103,5 @@ public class ClienteHibernateDAO {
 			}
 		}
 	}
-
-	/*
-	 * public boolean ativa(String contaValida) { Cliente cliente =
-	 * getClientById(codigoCliente); if (cliente != null) { return true; } return
-	 * false; }
-	 */
-
 
 }

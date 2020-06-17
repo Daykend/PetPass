@@ -10,6 +10,8 @@ public class PetPassMainConstantes {
 	public static final int EMPRESA = 4;
 	public static final int SERVICOS = 3;
 	public static final int PLANO = 2;
+	public static final int TESTES = 5;
+	public static final int RELATORIOS = 6;
 	
 	public static final int TERMINAR = 100;
 	

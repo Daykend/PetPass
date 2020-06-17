@@ -59,7 +59,7 @@ public class PlanoView {
 		do {
 			Scanner scan = new Scanner(System.in);
 			System.out.println("O que deseja modificar? Escolha uma opção:");
-			System.out.println("[1] Nome, [2] Preço, [3] Pacote [100] Sair");
+			System.out.println("[1] Nome, [2] Preço, [3] Pacote [4] Voltar Menu [100] Sair");
 			menu = scan.nextInt();
 
 			switch (menu) {
@@ -96,6 +96,10 @@ public class PlanoView {
 				System.out.println("Alteração realizada");
 
 				break;
+			case 4:
+				menuPlano();
+
+				break;
 				
 			case TERMINAR:
 				System.out.println("--------------------------------------");
@@ -130,11 +134,12 @@ public class PlanoView {
 		int menu = -1;
 		do {
 
-			System.out.println("Bem vindo(a) as opções de Cliente. Você gostaria de:");
+			System.out.println("Bem vindo(a) as opções de Plano. Você gostaria de:");
 			System.out.println("[1] - Criar Cadastro de Plano");
 			System.out.println("[2] - Editar Cadastro de Plano");
-			System.out.println("[3] - Listar Cadastro de Plano");
-			System.out.println("[4] - Deletar Cadastro de Plano");
+			System.out.println("[3] - Deletar Cadastro de Plano");
+			System.out.println("[4] - Mostrar Planos");
+			System.out.println("[100] - Sair");
 
 			menu = scan.nextInt();
 

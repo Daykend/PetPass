@@ -8,9 +8,14 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import br.unit.petpass.entities.CategoriaPet;
 import br.unit.petpass.entities.Cliente;
+import br.unit.petpass.entities.Contrato;
 import br.unit.petpass.entities.Empresa;
+import br.unit.petpass.entities.Pet;
 import br.unit.petpass.entities.Plano;
+import br.unit.petpass.entities.Raca;
+import br.unit.petpass.entities.Servicos;
 
 public class HibernateUtil {
 	
@@ -34,6 +39,11 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Cliente.class);
                 configuration.addAnnotatedClass(Plano.class);
                 configuration.addAnnotatedClass(Empresa.class);
+                configuration.addAnnotatedClass(Contrato.class);
+                configuration.addAnnotatedClass(Pet.class);
+                configuration.addAnnotatedClass(CategoriaPet.class);
+                configuration.addAnnotatedClass(Raca.class);
+                configuration.addAnnotatedClass(Servicos.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);

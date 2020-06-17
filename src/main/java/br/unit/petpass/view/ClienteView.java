@@ -11,11 +11,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import br.unit.petpass.controller.ClienteController;
+import br.unit.petpass.controller.ServicosController;
 import br.unit.petpass.entities.Cliente;
+import br.unit.petpass.entities.Servicos;
 import br.unit.petpass.exception.ClienteException;
 
 public class ClienteView {
-	ClienteController clienteController = new ClienteController();
+
 	Scanner scan = new Scanner(System.in);
 	
 	public void criarCliente() {
@@ -85,7 +87,7 @@ public class ClienteView {
 			Scanner scan = new Scanner(System.in);
 			System.out.println("O que deseja modificar? Escolha uma opção:");
 			System.out.println("[1] Nome, [2] CPF, [3] email, [4] RG, [5] Telefone,"
-					+ "[6] Endereço, [7] Data de Nascimento [100] Sair");
+					+ "[6] Endereço, [7] Data de Nascimento, [8] Voltar Menu [100] Sair");
 			menu = scan.nextInt();
 
 			switch (menu) {
@@ -173,6 +175,9 @@ public class ClienteView {
 				System.out.println("Alteração realizada");
 
 				break;
+			case 8:
+				menuCliente();
+				break;
 				
 			case TERMINAR:
 				System.out.println("--------------------------------------");
@@ -200,6 +205,8 @@ public class ClienteView {
 		clienteController.deletarCliente(cliente);
 		System.out.println("Cliente " + cliente + " deletado!");
 	}
+	
+
 	
 	public void menuCliente() {
 		

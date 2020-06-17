@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -24,12 +26,16 @@ public class Servicos implements Serializable {
 
 	@Id
 	@Column(name = "CODIGOSERVICO")
-	private Integer codigoServico;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer codigoServicos;
 
 	@Column(name = "NOME")
 	private String nome;
 
 	@Column(name = "CUSTOCREDITO")
 	private Integer custoCredito;
+	
+	@Column(name = "STATUS_SERVICO")
+	private Integer statusServico;
 
 }

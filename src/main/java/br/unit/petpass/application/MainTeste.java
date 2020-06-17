@@ -10,17 +10,23 @@ import java.util.Scanner;
 
 import br.unit.petpass.repository.HibernateUtil;
 import br.unit.petpass.view.ClienteView;
+import br.unit.petpass.view.ContratoView;
 import br.unit.petpass.view.EmpresaView;
+import br.unit.petpass.view.PetView;
 import br.unit.petpass.view.PlanoView;
+import br.unit.petpass.view.ServicosView;
 
 public class MainTeste {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		HibernateUtil.getSessionFactory().openSession();
+
 		EmpresaView empresaView = new EmpresaView();
 		ClienteView clienteView = new ClienteView();
 		PlanoView planoView = new PlanoView();
+		ContratoView contratoView = new ContratoView();
+		PetView petView = new PetView();
+		ServicosView servicosView = new ServicosView();
 
 
 		int opcao = -1;
@@ -60,10 +66,19 @@ public class MainTeste {
 			case MOSTRAR_CADASTROS:
 //				empresaView.listarEmpresas();
 //				clienteView.listarCLiente();
-				planoView.listarPlano();
-
+//				planoView.listarPlano();
+//				contratoView.listarContrato();
+//				petView.listarPets();
+//				contratoView.listarContrato2();
+				servicosView.listarServicos();
+				
 				break;
 
+			case 5:
+//				servicosView.testeContrato();
+//				contratoView.listarContrato2();
+				break;
+				
 			case TERMINAR:
 				System.out.println("--------------------------------------");
 				System.out.println("------------Até a Próxima!------------");
@@ -85,6 +100,7 @@ public class MainTeste {
 		System.out.println("[2] - Alterar");
 		System.out.println("[3] - Deletar");
 		System.out.println("[4] - Mostrar Cadastros");
+		System.out.println("[5] - Testes");
 		System.out.println("[100] - Terminar Programa");
 
 	}

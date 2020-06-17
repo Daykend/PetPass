@@ -1,24 +1,38 @@
 package br.unit.petpass.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class Pet {
-	// Faltam as FKs: Cleinte, Raça, CategoriaPet e os relacionamentos
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "PET")
+public class Pet implements Serializable {
+
 	
 	@Id
 	@Column(name="CODIGOPET")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoPet;
+	
+	@ManyToOne
+	@JoinColumn(name="FKRACA")
+	private Raca raca;
 	
 	@Column(name="NOME", length = 30)
 	private String nome;
@@ -32,12 +46,12 @@ public class Pet {
 	@Column(name="STATUS_PET")
 	private Integer statusPet = 1;
 	
-	@OneToMany
-	@JoinColumn//(name = "falta colocar o nome aqui ainda...")
-	private Raca raca;
+	@ManyToOne
+	@JoinColumn(name="FKCLIENTE")
+	private Cliente cliente;
 	
-	@OneToMany
-	@JoinColumn//(name = "falta colocar o nome aqui ainda...")
+	@ManyToOne
+	@JoinColumn(name="FKCATEGORIAPET")
 	private CategoriaPet categoriaPet;
 	
 	

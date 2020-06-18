@@ -13,6 +13,7 @@ import java.util.Scanner;
 import br.unit.petpass.view.ClienteView;
 //import br.unit.petpass.view.EmpresaView;
 import br.unit.petpass.view.PlanoView;
+import br.unit.petpass.view.RelatoriosView;
 import br.unit.petpass.view.TestesView;
 //import br.unit.petpass.view.ServicosView;
 
@@ -26,6 +27,7 @@ public class PetPassMain {
 		PlanoView planoView = new PlanoView();
 		//EmpresaView empresaView = new EmpresaView();
 		TestesView testesView = new TestesView();
+		RelatoriosView relatoriosView = new RelatoriosView();
 		
 		int opcao = -1;
 		do {
@@ -60,7 +62,7 @@ public class PetPassMain {
 				break;
 				
 			case RELATORIOS:
-				
+				relatoriosView.menuRelatorios();
 				break;
 
 				

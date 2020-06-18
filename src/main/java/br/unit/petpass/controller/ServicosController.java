@@ -49,5 +49,8 @@ public class ServicosController {
 			throw new ServicosException("Operação não é válida. Custo de servico abaixo do permitido.");
 		}
 	}
+	public List<Servicos> listAll2(Integer valorCredito) {
+		return servicosHibernateDAO.listAll2(valorCredito);
+	}
 
 }

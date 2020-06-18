@@ -108,4 +108,21 @@ public class ServicosHibernateDAO {
 		Query<Servicos> query = session.createQuery(hql);
 		return query.getResultList();
 	}
+	
+	public List<Servicos> listAll2(Integer valorCredito) {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "select c from Servicos c where custocredito < " + valorCredito;
+		Query<Servicos> query = session.createQuery(hql);
+		return query.getResultList();
+	}
+
+public List<Servicos> listAll3() {
+
+	Session session = HibernateUtil.getSessionFactory().openSession();
+	String hql = "select c from Servicos c";
+	Query<Servicos> query = session.createQuery(hql);
+	return query.getResultList();
+}
+
 }

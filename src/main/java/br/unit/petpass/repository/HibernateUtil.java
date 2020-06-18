@@ -28,11 +28,11 @@ public class HibernateUtil {
 
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                settings.put(Environment.URL, "jdbc:sqlserver://DEBORA\\SQLEXPR:1433;databaseName=UIB");
+                settings.put(Environment.URL, "jdbc:sqlserver://DEBORA\\SQLEXPR:1433;databaseName=UIB2");
                 settings.put(Environment.USER, "dba");
                 settings.put(Environment.PASS, "123");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
-                settings.put(Environment.SHOW_SQL, "true");
+                settings.put(Environment.SHOW_SQL, "false");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.HBM2DDL_AUTO, "update");
                 configuration.setProperties(settings);

@@ -42,9 +42,9 @@ public class MainTeste {
 			switch (opcao) {
 
 			case CRIAR_CADASTRO:
-//				empresaView.criarEmpresa();
+				empresaView.criarEmpresa();
 //				clienteView.criarCliente();
-				planoView.criarPlano();
+//				planoView.criarPlano();
 				
 				
 				break;

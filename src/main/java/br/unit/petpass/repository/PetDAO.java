@@ -33,18 +33,18 @@ static Session session;
 		}
 	}
 	
-//	public List<Pet> getAllPets() {
-//
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		String hql = "select p from Pet p where fkcliente = 10";
-//		Query<Pet> query = session.createQuery(hql);
-//		return query.getResultList();
-//	}
+	public List<Pet> getPetsCliente(Integer codigoCliente) {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "select p from Pet p where fkcliente =" + codigoCliente;
+		Query<Pet> query = session.createQuery(hql);
+		return query.getResultList();
+	}
 
 	public List<Pet> getAllPets() {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
-			return session.createQuery("select codigopet, nome, sexo_pet from Pet").list();
+			return session.createQuery("from Pet").list();
 			 
 		} catch(Exception sqlException) {
             if(null != session.getTransaction()) {

@@ -18,5 +18,8 @@ public class PetController {
 	public static List<Pet> getAllPets() {
 		return petDAO.getAllPets();
 	}
-
+	
+	public static List<Pet> getPetsCliente(Integer codigoCliente) {
+		return petDAO.getPetsCliente(codigoCliente);
+	}
 }

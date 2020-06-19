@@ -11,8 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import br.unit.petpass.controller.ClienteController;
+import br.unit.petpass.controller.ContratoController;
 import br.unit.petpass.controller.ServicosController;
 import br.unit.petpass.entities.Cliente;
+import br.unit.petpass.entities.Contrato;
 import br.unit.petpass.entities.Servicos;
 import br.unit.petpass.exception.ClienteException;
 
@@ -58,7 +60,7 @@ public class ClienteView {
 
 		System.out.println("Cadastro de Cliente concluido. Você Voltará ao menu inicial!");
 
-		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo);
+		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo, null , null);
 		clienteController.salvarCliente(cliente);
 
 	}
@@ -69,7 +71,7 @@ public class ClienteView {
 		java.util.List<Cliente> clientes = ClienteController.getAllClients();
 
 		for (Cliente cliente : clientes) {
-			System.out.println(cliente);
+			System.out.println(cliente.getCodigoCliente() + " || " + cliente.getNome() + " || " + cliente.getEmail());
 		}
 	}
 
@@ -206,6 +208,56 @@ public class ClienteView {
 		System.out.println("Cliente " + cliente + " deletado!");
 	}
 	
+	/* Funcao para bonificar o cliente */
+	public void bonificarCliente() {
+		
+		ClienteController clienteController = new ClienteController();
+		
+	        /* Carregando o cliente */
+	        System.out.println("Qual o código do cliente?");
+	        int cliente_id =  scan.nextInt();
+	        Cliente cliente = new Cliente();
+	        cliente = clienteController.getClientById(cliente_id);
+	       
+	        System.out.println("Cliente " + cliente.getNome() + " carregado com sucesso");
+	        System.out.println("Data de nascimento: " + cliente.getDtNascimento());
+	        System.out.println();
+	 
+	        /* Comparando a dt de nascimento do cliente */
+	        int diaNascimento = cliente.getDtNascimento().getDayOfMonth();
+	        int mesNascimento = cliente.getDtNascimento().getMonthValue();
+	       
+	        LocalDate hoje = LocalDate.now();
+	        int hojeDia = hoje.getDayOfMonth();
+	        int hojeMes = hoje.getMonthValue();
+	       
+	        /* Comparando o dia/mes para saber se está fazendo aniversário hoje */
+	        if( diaNascimento == hojeDia &&
+	            mesNascimento == hojeMes) {
+	            System.out.println("Parabéns! Hoje é seu aniversário");
+	            System.out.println("você será bonificado com um bônus de 30 créditos.");
+	 
+	            // carregando o contrato
+	            ContratoController contratoController = new ContratoController();
+	            //Contrato contrato = contratoController.getContratoById(cliente.getContrato().getCodigoContrato());
+	            Contrato contrato = cliente.getContrato();
+	           
+	            int saldoFinal = contrato.getSaldoFinal();
+	            System.out.println("Saldo antigo: " + saldoFinal );
+	            saldoFinal += 30;
+	            System.out.println("Saldo atual: " + saldoFinal);
+	            System.out.println("\n");
+	            System.out.println("salvando novo saldo final...");
+	           
+	            contrato.setSaldoFinal( (short) saldoFinal );
+	            contratoController.updateContrato( contrato );
+	            System.out.println("\n");
+	           
+	        }else {
+	            System.out.println("Bem vindo! Hoje *ainda* não é seu aniversário");
+	        }
+	       
+	}
 
 	
 	public void menuCliente() {
@@ -220,6 +272,7 @@ public class ClienteView {
 			System.out.println("[2] - Editar Cadastro de Cliente");
 			System.out.println("[3] - Deletar Cadastro de Clientes");
 			System.out.println("[4] - Mostrar Cadastros");
+			System.out.println("[5] - Verificar bonificação");
 			System.out.println("[100] - Sair");
 			
 			menu = scan.nextInt();
@@ -236,7 +289,11 @@ public class ClienteView {
 				break;
 			case DELETAR_CADASTRO:
 				deletarCliente();
-				break;				
+				break;
+			case 5:
+				bonificarCliente();
+				break;
+				
 			case TERMINAR:
 				System.out.println("--------------------------------------");
 				System.out.println("------------Até a Próxima!------------");

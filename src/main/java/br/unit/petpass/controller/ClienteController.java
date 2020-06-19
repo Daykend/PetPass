@@ -39,14 +39,6 @@ public class ClienteController {
 		return clienteHibernateDAO.getAllClients();
 	}
 		
-	public boolean inserir(Cliente cliente) {
-		String contaValida = Cliente.numeroCadastro();
-		
-		if (contaValida != null) {		
-			return true;
-		}
-		return false;
-	}
 	
 	public void deletarCliente(Cliente cliente) {
 

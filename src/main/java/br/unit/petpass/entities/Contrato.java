@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,13 +53,14 @@ public class Contrato implements Serializable {
 	@Column(name="STATUS_CONTRATO", nullable = false)
 	private Integer statusContrato = 1;
 	
-	@OneToOne
-	@JoinColumn(name="CODIGOCLIENTE")
-	private Cliente cliente;
 	
 	@ManyToOne
 	@JoinColumn(name = "CODIGOPLANO")
 	private Plano plano;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="FKCLIENTE")
+	private Cliente cliente;
 	
 //	@OneToMany
 //	@JoinColumn//(name = "falta colocar o nome aqui ainda...")

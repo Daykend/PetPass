@@ -42,9 +42,10 @@ public class MainTeste {
 			switch (opcao) {
 
 			case CRIAR_CADASTRO:
-				empresaView.criarEmpresa();
+//				empresaView.criarEmpresa();
 //				clienteView.criarCliente();
 //				planoView.criarPlano();
+				petView.cadastrarPet();
 				
 				
 				break;
@@ -65,12 +66,12 @@ public class MainTeste {
 				
 			case MOSTRAR_CADASTROS:
 //				empresaView.listarEmpresas();
-//				clienteView.listarCLiente();
+				clienteView.listarCLiente();
 //				planoView.listarPlano();
 //				contratoView.listarContrato();
 //				petView.listarPets();
 //				contratoView.listarContrato2();
-				servicosView.listarServicos();
+//				servicosView.listarServicos();
 				
 				break;
 

@@ -36,7 +36,7 @@ public class RelatoriosView {
 
 		// Iterating over empresas
 		for (Empresa empresa : empresas) {
-			System.out.println("===  Empresa: " + empresa.getNome() + "  ===");
+			System.out.println("Empresa: " + empresa.getNome());
 
 			// Iterating over services from this empresa
 			for (Servicos servico : empresa.getServicos()) {

@@ -28,7 +28,7 @@ public class HibernateUtil {
 
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                settings.put(Environment.URL, "jdbc:sqlserver://DEBORA\\SQLEXPR:1433;databaseName=UIB2");
+                settings.put(Environment.URL, "jdbc:sqlserver://DEBORA\\SQLEXPR:1433;databaseName=UIB");
                 settings.put(Environment.USER, "dba");
                 settings.put(Environment.PASS, "123");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");

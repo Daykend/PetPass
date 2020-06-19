@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import br.unit.petpass.entities.Pet;
 import br.unit.petpass.entities.Plano;
 
 public class PlanoHibernateDAO {
@@ -128,5 +129,4 @@ public class PlanoHibernateDAO {
 			}
 		}
 	}	
-	
 }

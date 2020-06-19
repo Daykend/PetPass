@@ -30,10 +30,6 @@ public class Pet implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoPet;
 	
-	@ManyToOne
-	@JoinColumn(name="FKRACA")
-	private Raca raca;
-	
 	@Column(name="NOME", length = 30)
 	private String nome;
 	
@@ -50,9 +46,13 @@ public class Pet implements Serializable {
 	@JoinColumn(name="FKCLIENTE")
 	private Cliente cliente;
 	
-	@ManyToOne
-	@JoinColumn(name="FKCATEGORIAPET")
-	private CategoriaPet categoriaPet;
+//	@ManyToOne
+//	@JoinColumn(name="FKRACA")
+//	private Raca raca;
+//	
+//	@ManyToOne
+//	@JoinColumn(name="FKCATEGORIAPET")
+//	private CategoriaPet categoriaPet;
 	
 	
 }

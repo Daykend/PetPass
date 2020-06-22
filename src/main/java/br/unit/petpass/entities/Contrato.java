@@ -55,7 +55,7 @@ public class Contrato implements Serializable {
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "CODIGOPLANO")
+	@JoinColumn(name = "FKPLANO")
 	private Plano plano;
 	
 	@OneToOne(fetch = FetchType.EAGER)

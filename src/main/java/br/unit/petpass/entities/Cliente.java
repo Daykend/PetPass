@@ -63,13 +63,11 @@ public class Cliente implements Serializable {
 	@JoinColumn(name = "FKCLIENTE")
 	private List<Pet> pets;
 	
-	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Contrato contrato;
-
-	public static String numeroCadastro() {
-		String uuid = UUID.randomUUID().toString();
-		return uuid;
-	}
+	
+//	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
+//	private Contrato contrato;
 
 
 }

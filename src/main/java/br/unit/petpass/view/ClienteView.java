@@ -12,9 +12,11 @@ import java.util.Scanner;
 
 import br.unit.petpass.controller.ClienteController;
 import br.unit.petpass.controller.ContratoController;
+import br.unit.petpass.controller.PetController;
 import br.unit.petpass.controller.ServicosController;
 import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Contrato;
+import br.unit.petpass.entities.Pet;
 import br.unit.petpass.entities.Servicos;
 import br.unit.petpass.exception.ClienteException;
 
@@ -71,7 +73,8 @@ public class ClienteView {
 		java.util.List<Cliente> clientes = ClienteController.getAllClients();
 
 		for (Cliente cliente : clientes) {
-			System.out.println(cliente.getCodigoCliente() + " || " + cliente.getNome() + " || " + cliente.getEmail());
+			System.out.println(cliente.getCodigoCliente() + "||" + cliente.getCpf() + " || " + cliente.getNome() +
+					" || " + cliente.getEmail() + " || " + cliente.getTelefone());
 		}
 	}
 
@@ -208,48 +211,77 @@ public class ClienteView {
 		System.out.println("Cliente " + cliente + " deletado!");
 	}
 	
-	/* Funcao para bonificar o cliente */
+	public void testeContrato() {
+
+		ServicosController servicosController = new ServicosController();
+		Servicos servicos = new Servicos();
+
+		System.out.println("Qual serviço? Digite o código:");
+		int codigoServicos = scan.nextInt();
+		servicos = servicosController.getServicos(codigoServicos);
+		scan.nextLine();
+		System.out.println("Serviço escolhido: " + servicos.getNome());
+
+		ContratoController contratoController = new ContratoController();
+		Contrato contrato = new Contrato();
+
+		System.out.println("Digite o código do Contrato a ser consultado:");
+		int codigoContrato = scan.nextInt();
+		contrato = contratoController.getContratoById(codigoContrato);
+		scan.nextLine();
+
+		Short c1 = contrato.getSaldoFinal();
+		Integer c2 = servicos.getCustoCredito();
+
+		if (c1 > c2) {
+			System.out.println("Cliente pode realizar serviço");
+		} else {
+			System.out.println("Saldo insuficiente! Cliente NÃO pode realizar serviço");
+		}
+
+	}
+	
+	
 	public void bonificarCliente() {
 		
 		ClienteController clienteController = new ClienteController();
 		
-	        /* Carregando o cliente */
+	        // Carregando o cliente
 	        System.out.println("Qual o código do cliente?");
-	        int cliente_id =  scan.nextInt();
+	        int codigoCliente =  scan.nextInt();
 	        Cliente cliente = new Cliente();
-	        cliente = clienteController.getClientById(cliente_id);
+	        cliente = clienteController.getClientById(codigoCliente);
 	       
 	        System.out.println("Cliente " + cliente.getNome() + " carregado com sucesso");
 	        System.out.println("Data de nascimento: " + cliente.getDtNascimento());
 	        System.out.println();
 	 
-	        /* Comparando a dt de nascimento do cliente */
+	        //Comparando a dt de nascimento do cliente
 	        int diaNascimento = cliente.getDtNascimento().getDayOfMonth();
 	        int mesNascimento = cliente.getDtNascimento().getMonthValue();
 	       
 	        LocalDate hoje = LocalDate.now();
-	        int hojeDia = hoje.getDayOfMonth();
-	        int hojeMes = hoje.getMonthValue();
+	        int diaHoje = hoje.getDayOfMonth();
+	        int mesHoje = hoje.getMonthValue();
 	       
-	        /* Comparando o dia/mes para saber se está fazendo aniversário hoje */
-	        if( diaNascimento == hojeDia &&
-	            mesNascimento == hojeMes) {
+	        //Comparando o dia/mes para saber se está fazendo aniversário hoje
+	        if( diaNascimento == diaHoje &&
+	            mesNascimento == mesHoje) {
 	            System.out.println("Parabéns! Hoje é seu aniversário");
-	            System.out.println("você será bonificado com um bônus de 30 créditos.");
+	            System.out.println("Você será bonificado com um bônus de 30 créditos.");
 	 
 	            // carregando o contrato
 	            ContratoController contratoController = new ContratoController();
-	            //Contrato contrato = contratoController.getContratoById(cliente.getContrato().getCodigoContrato());
 	            Contrato contrato = cliente.getContrato();
 	           
-	            int saldoFinal = contrato.getSaldoFinal();
+	            short saldoFinal = contrato.getSaldoFinal();
 	            System.out.println("Saldo antigo: " + saldoFinal );
 	            saldoFinal += 30;
 	            System.out.println("Saldo atual: " + saldoFinal);
 	            System.out.println("\n");
 	            System.out.println("salvando novo saldo final...");
 	           
-	            contrato.setSaldoFinal( (short) saldoFinal );
+	            contrato.setSaldoFinal(saldoFinal);
 	            contratoController.updateContrato( contrato );
 	            System.out.println("\n");
 	           
@@ -257,6 +289,38 @@ public class ClienteView {
 	            System.out.println("Bem vindo! Hoje *ainda* não é seu aniversário");
 	        }
 	       
+	}
+	
+	public void cadastrarPet() {
+		
+		System.out.print("Qual o codigo do cliente? ");
+		int cliente_id = scan.nextInt();
+		
+		ClienteController clienteController = new ClienteController();
+		Cliente cliente = clienteController.getClientById(cliente_id);
+		System.out.println("Cliente " + cliente.getNome() + " selecionado");
+		
+		PetController petController = new PetController();
+		System.out.println("Digite o nome do Pet");
+		String nome = scan.next();
+		
+		System.out.println("Digite a Data de Nascimento (dd/mm/aaaa)");
+		String data = scan.next();
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dtNascimentoPet = LocalDate.parse(data, dateFormat);
+		try {
+			dtNascimentoPet = LocalDate.parse(data, dateFormat);
+		} catch (Exception e) {
+			throw new ClienteException("Data inválida");
+		}
+		
+		System.out.println("Digite o genero do Pet");
+		String sexoPet = scan.next();
+		int statusPet = 1;
+		
+		Pet pet = new Pet(null, nome, dtNascimentoPet, sexoPet, statusPet, cliente);
+		petController.inserirPet(pet);
+			
 	}
 
 	
@@ -272,7 +336,9 @@ public class ClienteView {
 			System.out.println("[2] - Editar Cadastro de Cliente");
 			System.out.println("[3] - Deletar Cadastro de Clientes");
 			System.out.println("[4] - Mostrar Cadastros");
-			System.out.println("[5] - Verificar bonificação");
+			System.out.println("[5] - Verificar se cliente tem saldo para realizar serviço");
+			System.out.println("[6] - Verificar bonificação");
+			System.out.println("[7] - Cadastrar pet");
 			System.out.println("[100] - Sair");
 			
 			menu = scan.nextInt();
@@ -290,8 +356,17 @@ public class ClienteView {
 			case DELETAR_CADASTRO:
 				deletarCliente();
 				break;
+				
 			case 5:
+				testeContrato();
+				break;
+				
+			case 6:
 				bonificarCliente();
+				break;
+				
+			case 7:
+				cadastrarPet();
 				break;
 				
 			case TERMINAR:

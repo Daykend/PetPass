@@ -31,6 +31,6 @@ public class Raca {
 	private String nomeRaca;
 	
 	@OneToOne
-	@JoinColumn(name="CODIGOCATEGORIA")
+	@JoinColumn(name="FKCATEGORIAPET")
 	private CategoriaPet categoriaPet;
 }

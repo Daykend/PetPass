@@ -58,7 +58,7 @@ public class RelatoriosView {
 		List<Pet> pets = PetController.getPetsCliente(codigoCliente);
 		
 		for (Pet pet : pets) {
-			System.out.println(pet);
+			System.out.println("Nome: " + pet.getNome());
 		}
 		
 	}

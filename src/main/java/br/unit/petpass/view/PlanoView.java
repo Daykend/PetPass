@@ -41,7 +41,8 @@ public class PlanoView {
 		java.util.List<Plano> planos = PlanoController.listar();
 
 		for (Plano plano : planos) {
-			System.out.println(plano);
+			System.out.println("Cód: " + plano.getCodigoPlano() + " || Nome: " + plano.getNome() + 
+					" || Preço: " + plano.getPreco() + " || Pacote: " + plano.getPacoteInicialCredito());
 		}
 	}
 

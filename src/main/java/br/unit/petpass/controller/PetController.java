@@ -7,7 +7,7 @@ import br.unit.petpass.entities.Pet;
 import br.unit.petpass.repository.PetHibernateDAO;
 
 public class PetController {
-	public final int MAX_PETS = 3;
+	public final int MAX_PETS = 5;
 
 	private static PetHibernateDAO petHibernateDAO;
 

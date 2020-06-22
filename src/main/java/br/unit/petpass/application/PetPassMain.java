@@ -57,9 +57,9 @@ public class PetPassMain {
 //				ServicosView();
 //				break;
 				
-			case TESTES:
-				testesView.menuTestes();
-				break;
+//			case TESTES:
+//				testesView.menuTestes();
+//				break;
 				
 			case RELATORIOS:
 				relatoriosView.menuRelatorios();
@@ -84,7 +84,7 @@ public class PetPassMain {
 
 	private static void menuInicial() {
 		System.out.println("------ Você está aqui para tratar de Assuntos de: ------");
-		System.out.println("[1] - Cliente  [2] - Plano  [5] - Testes  [6] - Relatórios");
+		System.out.println("[1] - Cliente  [2] - Plano  [6] - Relatórios");
 
 	}
 

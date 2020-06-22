@@ -35,7 +35,7 @@ public class Servicos implements Serializable {
 	@Column(name = "CUSTOCREDITO")
 	private Integer custoCredito;
 	
-	@Column(name = "STATUS_SERVICO")
-	private Integer statusServico;
+	@Column(name = "STATUS_SERVICOS")
+	private Integer statusServico = 1;
 
 }

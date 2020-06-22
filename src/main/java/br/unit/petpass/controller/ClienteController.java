@@ -41,7 +41,6 @@ public class ClienteController {
 		
 	
 	public void deletarCliente(Cliente cliente) {
-
 		clienteHibernateDAO.deletarCliente(cliente);
 	}
 	

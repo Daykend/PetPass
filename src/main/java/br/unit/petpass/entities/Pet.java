@@ -49,10 +49,10 @@ public class Pet implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="FKRACA")
 	private Raca raca;
-//	
-	@ManyToOne
-	@Column(name="FKCATEGORIAPET")
-	private CategoriaPet categoriaPet;
+	
+//	@ManyToOne
+//	@JoinColumn(name="FKCATEGORIAPET")
+//	private CategoriaPet categoriaPet;
 	
 	
 }

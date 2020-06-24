@@ -5,9 +5,11 @@ import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
 import java.util.List;
 import java.util.Scanner;
 
+import br.unit.petpass.controller.ContratoController;
 import br.unit.petpass.controller.EmpresaController;
 import br.unit.petpass.controller.PetController;
 import br.unit.petpass.controller.ServicosController;
+import br.unit.petpass.entities.Contrato;
 import br.unit.petpass.entities.Empresa;
 import br.unit.petpass.entities.Pet;
 import br.unit.petpass.entities.Servicos;
@@ -15,7 +17,7 @@ import br.unit.petpass.entities.Servicos;
 public class RelatoriosView {
 	Scanner scan = new Scanner(System.in);
 
-	public void servicosBaratos() {
+	public void servicosAteValor() {
 		ServicosController servicosController = new ServicosController();
 
 		System.out.println("Qual valor máximo do serviço?");
@@ -34,18 +36,14 @@ public class RelatoriosView {
 		EmpresaController empresaController = new EmpresaController();
 		empresas = empresaController.listarEmpresa();
 
-		// Iterating over empresas
 		for (Empresa empresa : empresas) {
 			System.out.println("Empresa: " + empresa.getNome());
 
-			// Iterating over services from this empresa
 			for (Servicos servico : empresa.getServicos()) {
 				System.out.println("Serviço: " + servico.getNome());
 			}
-
 			System.out.println("\n");
 		}
-
 		System.out.println("\n\n");
 	}
 	
@@ -62,6 +60,23 @@ public class RelatoriosView {
 		}
 		
 	}
+	
+	public void listaCreditosClientes() {
+		List<Contrato> contratos;
+		ContratoController contratoController =  new ContratoController();
+		contratos = contratoController.getAllContratos();
+		int soma = 0;
+		for (Contrato contrato : contratos) {
+			System.out.println("Numero Contrato: ||" + contrato.getCodigoContrato() 
+			+ "|| Saldo de pontos :" + contrato.getSaldoFinal());
+			
+			soma = contrato.getSaldoFinal() + soma;
+
+		}
+		System.out.println("Total de pontos ativos: " + soma);
+		System.out.println("\n");
+
+	}
 
 	public void menuRelatorios() {
 
@@ -69,24 +84,33 @@ public class RelatoriosView {
 		do {
 
 			System.out.println("Bem vindo(a) as opções de Relatorios. Você gostaria de:");
-			System.out.println("[1] - Lista de serviços que cada empresa realiza");
-			System.out.println("[2] - Lista de serviços até certo valor");
+			System.out.println("[1] - Lista de contratos e saldo de pontos");
+			System.out.println("[2] - Lista de serviços que cada empresa realiza");
 			System.out.println("[3] - Lista de pets por cliente");
+			System.out.println("[4] - Lista de serviços até determinado valor");
 			System.out.println("[100] - Sair");
 
 			menu = scan.nextInt();
 
 			switch (menu) {
-			case 1:
-				relatorioServicosPorEmpresas();
+			case 1:				
+				listaCreditosClientes();
 				break;
 
 			case 2:
-				servicosBaratos();
+				relatorioServicosPorEmpresas();
 				break;
 
 			case 3:
 				listarPetsPorCliente();
+				break;
+				
+			case 4:
+				servicosAteValor();
+				break;
+				
+			case 5:
+				
 				break;
 
 			case TERMINAR:

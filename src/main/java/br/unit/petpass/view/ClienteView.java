@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import br.unit.petpass.application.PetPassMain;
+import br.unit.petpass.controller.CategoriaPetController;
 import br.unit.petpass.controller.ClienteController;
 import br.unit.petpass.controller.ContratoController;
 import br.unit.petpass.controller.PetController;
@@ -62,10 +64,12 @@ public class ClienteView {
 
 		System.out.println("Digite F para gênero feminino, e M para gênero masculino");
 		String sexo = scan.next();
+		
+		int bonificacao = 0;
 
 		System.out.println("Cadastro de Cliente concluido. Você Voltará ao menu inicial!");
 
-		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo, null , null);
+		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo, bonificacao, null , null);
 		clienteController.salvarCliente(cliente);
 
 	}
@@ -225,8 +229,15 @@ public class ClienteView {
 		scan.nextLine();
 
 		ServicosController servicosController = new ServicosController();
-		Servicos servicos = new Servicos();
+		
+		
+		java.util.List<Servicos> servicos2 =  servicosController.listAll();
 
+		for (Servicos servico : servicos2) {
+			System.out.println(servico.getCodigoServicos() + " || " + servico.getNome());
+			}
+
+		Servicos servicos = new Servicos();
 		System.out.println("Qual serviço? Digite o código:");
 		int codigoServicos = scan.nextInt();
 		servicos = servicosController.getServicos(codigoServicos);
@@ -290,11 +301,9 @@ public class ClienteView {
 		int codigoRaca = scan.nextInt();
 		
 		Raca raca2 = racaController.getRacaById(codigoRaca);
-		int fkCodigoCategoriaPet = raca2.getCategoriaPet().getCodigoCategoria();
-		
 		int statusPet = 1;
 		
-		Pet pet = new Pet(null, nome, dtNascimentoPet, sexoPet, statusPet, cliente, raca2, fkCodigoCategoriaPet);
+		Pet pet = new Pet(null, nome, dtNascimentoPet, sexoPet, statusPet, cliente, raca2);
 		petController.inserirPet(pet);
 			
 	}
@@ -320,16 +329,16 @@ public class ClienteView {
 			menu = scan.nextInt();
 			
 			switch (menu)  {
-			case CRIAR_CADASTRO:
+			case 1:
 				criarCliente();
 				break;
-			case ALTERAR_CADASTRO:
+			case 2:
 				atualizarCliente();
 				break;
-			case MOSTRAR_CADASTROS:
+			case 3:
 				listarCLiente();
 				break;
-			case DELETAR_CADASTRO:
+			case 4:
 				deletarCliente();
 				break;
 				

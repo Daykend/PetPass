@@ -59,6 +59,9 @@ public class Cliente implements Serializable {
 	@Column(name = "SEXO", length = 1)
 	private String sexo;
 	
+	@Column(name = "BONIFICACAO")
+	private int bonificacao;
+	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "FKCLIENTE")
 	private List<Pet> pets;
@@ -66,8 +69,4 @@ public class Cliente implements Serializable {
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Contrato contrato;
 	
-//	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
-//	private Contrato contrato;
-
-
 }

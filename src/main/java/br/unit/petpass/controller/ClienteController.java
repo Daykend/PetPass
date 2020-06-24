@@ -56,7 +56,7 @@ public class ClienteController {
        
 
         if( diaNascimento == diaHoje &&
-            mesNascimento == mesHoje) {
+            mesNascimento == mesHoje && cliente.getBonificacao() == 0) {
             System.out.println("Parabéns! Hoje é seu aniversário");
             System.out.println("Você será bonificado com 20 créditos.");
 
@@ -72,9 +72,14 @@ public class ClienteController {
             contrato.setSaldoFinal(saldoFinal);
             contratoController.updateContrato( contrato );
             System.out.println("\n");
+            
+            ClienteController clienteController = new ClienteController();
+            cliente.setBonificacao(1);
+            clienteController.updateCliente(cliente);
+            
            
         }else {
-            System.out.println("Bem vindo! Hoje *ainda* não é seu aniversário");
+            System.out.println("Bem vindo! Você não tem direito a bonificação!");
             System.out.println("\n");
         }
        

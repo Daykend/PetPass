@@ -27,7 +27,7 @@ public class Raca {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoRaca;
 	
-	@Column(name="NOME", length = 30)
+	@Column(name="NOMERACA", length = 30)
 	private String nomeRaca;
 	
 	@OneToOne

@@ -46,13 +46,13 @@ public class Pet implements Serializable {
 	@JoinColumn(name="FKCLIENTE")
 	private Cliente cliente;
 	
-//	@ManyToOne
-//	@JoinColumn(name="FKRACA")
-//	private Raca raca;
+	@ManyToOne
+	@JoinColumn(name="FKRACA")
+	private Raca raca;
 //	
-//	@ManyToOne
-//	@JoinColumn(name="FKCATEGORIAPET")
-//	private CategoriaPet categoriaPet;
+	@ManyToOne
+	@Column(name="FKCATEGORIAPET")
+	private CategoriaPet categoriaPet;
 	
 	
 }

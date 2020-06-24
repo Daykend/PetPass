@@ -13,10 +13,13 @@ import java.util.Scanner;
 import br.unit.petpass.controller.ClienteController;
 import br.unit.petpass.controller.ContratoController;
 import br.unit.petpass.controller.PetController;
+import br.unit.petpass.controller.RacaController;
 import br.unit.petpass.controller.ServicosController;
+import br.unit.petpass.entities.CategoriaPet;
 import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Contrato;
 import br.unit.petpass.entities.Pet;
+import br.unit.petpass.entities.Raca;
 import br.unit.petpass.entities.Servicos;
 import br.unit.petpass.exception.ClienteException;
 
@@ -211,7 +214,15 @@ public class ClienteView {
 		System.out.println("Cliente " + cliente + " deletado!");
 	}
 	
-	public void testeContrato() {
+	public void verificaSaldo() {
+		ClienteController clienteController = new ClienteController();
+		ContratoController contratoController = new ContratoController();
+		Contrato contrato = new Contrato();
+		
+		System.out.println("Digite o código do Contrato a ser consultado:");
+		int codigoContrato = scan.nextInt();
+		contrato = contratoController.getContratoById(codigoContrato);
+		scan.nextLine();
 
 		ServicosController servicosController = new ServicosController();
 		Servicos servicos = new Servicos();
@@ -220,76 +231,24 @@ public class ClienteView {
 		int codigoServicos = scan.nextInt();
 		servicos = servicosController.getServicos(codigoServicos);
 		scan.nextLine();
-		System.out.println("Serviço escolhido: " + servicos.getNome());
-
-		ContratoController contratoController = new ContratoController();
-		Contrato contrato = new Contrato();
-
-		System.out.println("Digite o código do Contrato a ser consultado:");
-		int codigoContrato = scan.nextInt();
-		contrato = contratoController.getContratoById(codigoContrato);
-		scan.nextLine();
-
-		Short c1 = contrato.getSaldoFinal();
-		Integer c2 = servicos.getCustoCredito();
-
-		if (c1 > c2) {
-			System.out.println("Cliente pode realizar serviço");
-		} else {
-			System.out.println("Saldo insuficiente! Cliente NÃO pode realizar serviço");
-		}
-
+		
+		clienteController.verificaSaldoServico(contrato, servicos);
+		
 	}
-	
 	
 	public void bonificarCliente() {
-		
-		ClienteController clienteController = new ClienteController();
-		
-	        // Carregando o cliente
-	        System.out.println("Qual o código do cliente?");
-	        int codigoCliente =  scan.nextInt();
-	        Cliente cliente = new Cliente();
-	        cliente = clienteController.getClientById(codigoCliente);
-	       
-	        System.out.println("Cliente " + cliente.getNome() + " carregado com sucesso");
-	        System.out.println("Data de nascimento: " + cliente.getDtNascimento());
-	        System.out.println();
-	 
-	        //Comparando a dt de nascimento do cliente
-	        int diaNascimento = cliente.getDtNascimento().getDayOfMonth();
-	        int mesNascimento = cliente.getDtNascimento().getMonthValue();
-	       
-	        LocalDate hoje = LocalDate.now();
-	        int diaHoje = hoje.getDayOfMonth();
-	        int mesHoje = hoje.getMonthValue();
-	       
-	        //Comparando o dia/mes para saber se está fazendo aniversário hoje
-	        if( diaNascimento == diaHoje &&
-	            mesNascimento == mesHoje) {
-	            System.out.println("Parabéns! Hoje é seu aniversário");
-	            System.out.println("Você será bonificado com um bônus de 30 créditos.");
-	 
-	            // carregando o contrato
-	            ContratoController contratoController = new ContratoController();
-	            Contrato contrato = cliente.getContrato();
-	           
-	            short saldoFinal = contrato.getSaldoFinal();
-	            System.out.println("Saldo antigo: " + saldoFinal );
-	            saldoFinal += 30;
-	            System.out.println("Saldo atual: " + saldoFinal);
-	            System.out.println("\n");
-	            System.out.println("salvando novo saldo final...");
-	           
-	            contrato.setSaldoFinal(saldoFinal);
-	            contratoController.updateContrato( contrato );
-	            System.out.println("\n");
-	           
-	        }else {
-	            System.out.println("Bem vindo! Hoje *ainda* não é seu aniversário");
-	        }
-	       
+	
+	ClienteController clienteController = new ClienteController();
+	
+        System.out.println("Qual o código do cliente?");
+        int codigoCliente =  scan.nextInt();
+        Cliente cliente = new Cliente();
+        cliente = clienteController.getClientById(codigoCliente);
+        
+        clienteController.bonificacaoAniversario(cliente);
+        
 	}
+	
 	
 	public void cadastrarPet() {
 		
@@ -316,9 +275,26 @@ public class ClienteView {
 		
 		System.out.println("Digite o genero do Pet");
 		String sexoPet = scan.next();
+		
+		
+		RacaController racaController = new RacaController();
+		
+		java.util.List<Raca> racas =  racaController.getAllRacas(); 
+
+		for (Raca raca : racas) {
+			System.out.println(raca.getCodigoRaca() + " || " + raca.getNomeRaca());
+			}
+		
+		System.out.println("\n");
+		System.out.println("Qual o código da raça?");
+		int codigoRaca = scan.nextInt();
+		
+		Raca raca2 = racaController.getRacaById(codigoRaca);
+		int fkCodigoCategoriaPet = raca2.getCategoriaPet().getCodigoCategoria();
+		
 		int statusPet = 1;
 		
-		Pet pet = new Pet(null, nome, dtNascimentoPet, sexoPet, statusPet, cliente);
+		Pet pet = new Pet(null, nome, dtNascimentoPet, sexoPet, statusPet, cliente, raca2, fkCodigoCategoriaPet);
 		petController.inserirPet(pet);
 			
 	}
@@ -338,7 +314,7 @@ public class ClienteView {
 			System.out.println("[4] - Mostrar Cadastros");
 			System.out.println("[5] - Verificar se cliente tem saldo para realizar serviço");
 			System.out.println("[6] - Verificar bonificação");
-			System.out.println("[7] - Cadastrar pet");
+			System.out.println("[7] - Cadastrar pet com verificação");
 			System.out.println("[100] - Sair");
 			
 			menu = scan.nextInt();
@@ -358,7 +334,7 @@ public class ClienteView {
 				break;
 				
 			case 5:
-				testeContrato();
+				verificaSaldo();
 				break;
 				
 			case 6:

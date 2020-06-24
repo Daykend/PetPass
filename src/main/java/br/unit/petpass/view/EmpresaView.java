@@ -29,8 +29,6 @@ public class EmpresaView {
 		System.out.println("Preencha o Endereço:");
 		String endereco = scan.nextLine();
 
-	//	Empresa empresa = new Empresa(null, nome, cnpj, telefone, endereco);
-		
 		
 		Empresa empresa2 = new Empresa(null, nome, cnpj, telefone, endereco, null);
 		empresaController.salvar(empresa2);

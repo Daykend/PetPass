@@ -36,7 +36,7 @@ public class PlanoHibernateDAO {
 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
-			Query query = session.createQuery("select e from Plano e where e.id = " + codigoPlano);
+			Query query = session.createQuery("select pl from Plano pl where pl.id = " + codigoPlano);
 			List<Plano> plano = query.list();
 			if (plano.size() > 0) {
 				return plano.get(0);
@@ -44,11 +44,11 @@ public class PlanoHibernateDAO {
 			else {
 				return null;
 			}
-		} catch(Exception sqlException) {
+		} catch(Exception e) {
 			if(null != session.getTransaction()) {
 				session.getTransaction().rollback();
 			}
-			sqlException.printStackTrace();
+			e.printStackTrace();
 			return null;
 		} finally {
 			if(session != null) {

@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("unused")
 @Data
 @Entity
 @AllArgsConstructor
@@ -68,5 +69,23 @@ public class Cliente implements Serializable {
 	
 	@OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Contrato contrato;
+
+	public Cliente(String cpf, String nome, String rg, String telefone, String email, String endereco,
+			LocalDate dtNascimento, String sexo, int bonificacao, List<Pet> pets, Contrato contrato) {
+		super();
+		this.cpf = cpf;
+		this.nome = nome;
+		this.rg = rg;
+		this.telefone = telefone;
+		this.email = email;
+		this.endereco = endereco;
+		this.dtNascimento = dtNascimento;
+		this.sexo = sexo;
+		this.bonificacao = bonificacao;
+		this.pets = pets;
+		this.contrato = contrato;
+	}
+	
+	
 	
 }

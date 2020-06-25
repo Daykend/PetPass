@@ -24,7 +24,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "PET")
 public class Pet implements Serializable {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="CODIGOPET")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

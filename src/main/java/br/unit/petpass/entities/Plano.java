@@ -36,4 +36,9 @@ public class Plano implements Serializable {
 	@Column(name = "PACOTEINICIALCREDITO", nullable = false)
 	private Integer pacoteInicialCredito;
 
+	public Plano(String nome, Double preco, Integer pacoteInicialCredito) {
+		this.nome = nome;
+		this.preco = preco;
+		this.pacoteInicialCredito = pacoteInicialCredito;
+	}
 }

@@ -89,6 +89,8 @@ public class ClienteController {
 	public void verificaSaldoServico(Contrato contrato, Servicos servicos) {
 		Short c1 = contrato.getSaldoFinal();
 		Integer c2 = servicos.getCustoCredito();
+		System.out.println("Serviço escolhido: " + servicos.getNome() + " Valor: " + servicos.getCustoCredito());
+		System.out.println("Saldo do contrato: " + contrato.getSaldoFinal());
 
 		if (c1 > c2) {
 			System.out.println("Cliente pode realizar serviço");

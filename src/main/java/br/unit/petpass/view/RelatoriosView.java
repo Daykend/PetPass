@@ -23,9 +23,10 @@ public class RelatoriosView {
 		System.out.println("Qual valor máximo do serviço?");
 		int valorCredito = scan.nextInt();
 		java.util.List<Servicos> servico = servicosController.listAll2(valorCredito);
+		
 
 		for (Servicos servicos : servico) {
-			System.out.println(servicos);
+			System.out.println("Nome: " + servicos.getNome()+ " || Valor: " + servicos.getCustoCredito());
 		}
 
 	}

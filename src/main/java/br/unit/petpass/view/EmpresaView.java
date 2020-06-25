@@ -1,7 +1,6 @@
 package br.unit.petpass.view;
 
 import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
-import org.hibernate.mapping.List;
 
 import java.util.Scanner;
 

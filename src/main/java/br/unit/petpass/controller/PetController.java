@@ -24,7 +24,7 @@ public class PetController {
 
 		Cliente cliente = pet.getCliente();
 		List<Pet> ownedPets = cliente.getPets();
-		System.out.println("Cliente " + cliente.getNome() + " atualmente possui " + ownedPets.size() + " pets");
+		System.out.println("Cliente " + cliente.getNome() + " atualmente possui " + (ownedPets.size()+1) + " pets");
 
         Contrato contrato = cliente.getContrato();
         Plano plano = contrato.getPlano();

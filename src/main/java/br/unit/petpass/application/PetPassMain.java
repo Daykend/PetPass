@@ -1,21 +1,15 @@
 package br.unit.petpass.application;
 
 import static br.unit.petpass.application.PetPassMainConstantes.CLIENTE;
-//import static br.unit.petpass.application.PetPassMainConstantes.EMPRESA;
 import static br.unit.petpass.application.PetPassMainConstantes.PLANO;
-//import static br.unit.petpass.application.PetPassMainConstantes.SERVICOS;
-import static br.unit.petpass.application.PetPassMainConstantes.TESTES;
 import static br.unit.petpass.application.PetPassMainConstantes.RELATORIOS;
 import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
 
 import java.util.Scanner;
 
 import br.unit.petpass.view.ClienteView;
-//import br.unit.petpass.view.EmpresaView;
 import br.unit.petpass.view.PlanoView;
 import br.unit.petpass.view.RelatoriosView;
-import br.unit.petpass.view.TestesView;
-//import br.unit.petpass.view.ServicosView;
 
 public class PetPassMain {
 
@@ -23,12 +17,9 @@ public class PetPassMain {
 		Scanner scan = new Scanner(System.in);
 
 		ClienteView clienteView = new ClienteView();
-		//ServicosView servicosView = new ServicosView();
 		PlanoView planoView = new PlanoView();
-		//EmpresaView empresaView = new EmpresaView();
-		TestesView testesView = new TestesView();
 		RelatoriosView relatoriosView = new RelatoriosView();
-		
+
 		int opcao = -1;
 		do {
 			System.out.println("-----------------------------------");
@@ -44,28 +35,14 @@ public class PetPassMain {
 			case CLIENTE:
 				clienteView.menuCliente();
 				break;
-				
+
 			case PLANO:
 				planoView.menuPlano();
 				break;
 
-//			case EMPRESA:
-//				EmpresaView.;
-//				break;
-				
-//			case SERVICOS:
-//				ServicosView();
-//				break;
-				
-//			case TESTES:
-//				testesView.menuTestes();
-//				break;
-				
 			case RELATORIOS:
 				relatoriosView.menuRelatorios();
 				break;
-
-				
 
 			case TERMINAR:
 				System.out.println("--------------------------------------");

@@ -3,10 +3,8 @@ package br.unit.petpass.view;
 import java.util.Scanner;
 
 import br.unit.petpass.controller.ClienteController;
-import br.unit.petpass.controller.ContratoController;
 import br.unit.petpass.controller.PetController;
 import br.unit.petpass.entities.Cliente;
-import br.unit.petpass.entities.Contrato;
 import br.unit.petpass.entities.Pet;
 
 public class PetView {
@@ -32,7 +30,6 @@ public class PetView {
 		String pet_nome = scan.next();
 
 		PetController petController = new PetController();
-		// Pet pet = new Pet(null, pet_nome, null, null, null, null, null );
 		Pet pet = new Pet();
 		pet.setNome(pet_nome);
 		pet.setCliente(cliente);
@@ -46,11 +43,8 @@ public class PetView {
 		new PetController();
 
 		java.util.List<Pet> pets = PetController.getAllPets();
-//		pets.forEach(System.out::println);
 
-//		for (Pet pet : pets) {
 		System.out.println(pets);
-//		}
 	}
 	public void menuPet() {
 

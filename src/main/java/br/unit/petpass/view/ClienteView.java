@@ -1,23 +1,18 @@
 package br.unit.petpass.view;
 
-import static br.unit.petpass.application.PetPassMainConstantes.ALTERAR_CADASTRO;
-import static br.unit.petpass.application.PetPassMainConstantes.CRIAR_CADASTRO;
-import static br.unit.petpass.application.PetPassMainConstantes.DELETAR_CADASTRO;
-import static br.unit.petpass.application.PetPassMainConstantes.MOSTRAR_CADASTROS;
+
 import static br.unit.petpass.application.PetPassMainConstantes.TERMINAR;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-import br.unit.petpass.application.PetPassMain;
-import br.unit.petpass.controller.CategoriaPetController;
+
 import br.unit.petpass.controller.ClienteController;
 import br.unit.petpass.controller.ContratoController;
 import br.unit.petpass.controller.PetController;
 import br.unit.petpass.controller.RacaController;
 import br.unit.petpass.controller.ServicosController;
-import br.unit.petpass.entities.CategoriaPet;
 import br.unit.petpass.entities.Cliente;
 import br.unit.petpass.entities.Contrato;
 import br.unit.petpass.entities.Pet;
@@ -71,6 +66,7 @@ public class ClienteView {
 
 		Cliente cliente = new Cliente(null, cpf, nome, rg, telefone, email, endereco, dtNascimento, sexo, bonificacao, null , null);
 		clienteController.salvarCliente(cliente);
+		scan.close();
 
 	}
 	
@@ -234,7 +230,8 @@ public class ClienteView {
 		java.util.List<Servicos> servicos2 =  servicosController.listAll();
 
 		for (Servicos servico : servicos2) {
-			System.out.println(servico.getCodigoServicos() + " || " + servico.getNome());
+			System.out.println(servico.getCodigoServicos() + " || " + servico.getNome()
+			+ " || Valor: " + servico.getCustoCredito() + " pontos");
 			}
 
 		Servicos servicos = new Servicos();
@@ -290,7 +287,7 @@ public class ClienteView {
 		
 		RacaController racaController = new RacaController();
 		
-		java.util.List<Raca> racas =  racaController.getAllRacas(); 
+		java.util.List<Raca> racas =  RacaController.getAllRacas(); 
 
 		for (Raca raca : racas) {
 			System.out.println(raca.getCodigoRaca() + " || " + raca.getNomeRaca());
@@ -332,15 +329,19 @@ public class ClienteView {
 			case 1:
 				criarCliente();
 				break;
+				
 			case 2:
 				atualizarCliente();
 				break;
+				
 			case 3:
-				listarCLiente();
-				break;
-			case 4:
 				deletarCliente();
 				break;
+				
+			case 4:
+				listarCLiente();
+				break;
+
 				
 			case 5:
 				verificaSaldo();
